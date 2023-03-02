@@ -1,0 +1,18 @@
+getgenv().CollectOrbs = true
+
+task.spawn(function()
+   local LocalPlayer = game:GetService("Players").LocalPlayer
+   local PlayerHead = LocalPlayer.Character.Head
+
+   while CollectOrbs and task.wait() do
+      for _,v in next, game:GetService("Workspace"):GetDescendants() do
+         if v.Name == "TouchInterest" and v.Parent then
+            firetouchinterest(PlayerHead, v.Parent, 0)
+            firetouchinterest(PlayerHead, v.Parent, 1)
+            task.wait()
+
+         if not CollectOrbs then break end
+      end
+   end
+end
+end)

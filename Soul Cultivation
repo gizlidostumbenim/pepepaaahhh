@@ -1,0 +1,329 @@
+local client = game.Players.LocalPlayer
+local insta = game.Players.LocalPlayer.Character
+local Enemies = {}
+
+for i, v in pairs(game:GetService("Workspace").NPCS:GetDescendants()) do
+    if v:IsA "Model" and v.Parent.Name == "NPCS" then
+		if not table.find(Enemies, tostring(v)) then
+			table.insert(Enemies, tostring(v))
+		end
+    end
+end
+local function getClosest()
+    local dist, thing = math.huge
+    for i, v in next, game:GetService("Workspace").NPCS:GetDescendants() do
+      if  v.Name == "HumanoidRootPart" then
+            local mag =
+                (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
+            if mag < dist then
+                dist = mag
+                thing = v
+            end
+        end
+    end
+    return thing
+end
+local Plr = game.Players.LocalPlayer
+local vu = game:GetService("VirtualUser")
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/CustomFIeld/main/RayField.lua'))()
+
+local Window = Rayfield:CreateWindow({
+	Name = "Soul Cultivation",
+	LoadingTitle = "Oxygen Hub",
+	LoadingSubtitle = "by Oxygen",
+	ConfigurationSaving = {
+		Enabled = true,
+		FolderName = nil, 
+		FileName = "Oxygen"
+	},
+        Discord = {
+        	Enabled = true,
+        	Invite = "RVnjYRWNA9", 
+        	RememberJoins = true
+        },
+      KeySystem = false, -- Set this to true to use our key system
+      KeySettings = {
+      Title = "Oxygen Hub",
+      Subtitle = "Key System",
+      Note = "Join the discord (discord.gg/RVnjYRWNA9)",
+      FileName = "Key",
+      SaveKey = true,
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = "FUCKME"
+   }
+
+})
+
+local Tab = Window:CreateTab("⚔️ Farm")
+
+function autoattack()
+    local button = game:service'VirtualInputManager'
+    local X, Y = 0, 0
+    
+    button:SendMouseButtonEvent(X, Y, 0, true, game, 1)
+    button:SendMouseButtonEvent(X, Y, 0, false, game, 1)
+    wait(0.2)
+end
+
+local Section = Tab:CreateSection('Farming',false)
+    Tab:CreateToggle({
+	Name = "Auto Attack Combat (Equip Combat)",
+	Interact = 'Interact',
+	SectionParent = Section,
+	CurrentValue = false,
+	Flag = "Toggle1", 
+	Callback = function(Value)
+    attacking = Value
+            while attacking do task.wait()
+local args = {[1] = game:GetService("Players").LocalPlayer.Character:FindFirstChild("Right Arm")}game:GetService("Players").LocalPlayer.Character.Combat.Combo.C0:FireServer(unpack(args))
+local args = {[1] = game:GetService("Players").LocalPlayer.Character:FindFirstChild("Right Leg")}game:GetService("Players").LocalPlayer.Character.Combat.Combo.C1:FireServer(unpack(args))
+local args = {[1] = game:GetService("Players").LocalPlayer.Character:FindFirstChild("Left Arm")}game:GetService("Players").LocalPlayer.Character.Combat.Combo.C2:FireServer(unpack(args))
+local args = {[1] = game:GetService("Players").LocalPlayer.Character:FindFirstChild("Right Leg")}game:GetService("Players").LocalPlayer.Character.Combat.Combo.C3:FireServer(unpack(args))
+		end
+	end,
+})
+
+
+Tab:CreateToggle({
+	Name = "Auto Click Virtual",
+		Interact = 'Interact',
+	SectionParent = Section,
+	CurrentValue = false,
+	Flag = "Toggle1", 
+	Callback = function(Value)
+    attackings = Value
+            while attackings do task.wait()
+autoattack()
+		end
+	end,
+})
+
+Tab:CreateToggle({
+	Name = "Cultivation",
+		Interact = 'Interact',
+	SectionParent = Section,
+	CurrentValue = false,
+	Flag = "Toggle1", 
+	Callback = function(Value)
+local args = {[1] = true}game:GetService("ReplicatedStorage"):FindFirstChild("Qi Remote Events").Cultivate:FireServer(unpack(args))
+	end,
+})
+
+local Dropdown = Tab:CreateDropdown({
+	Name = "Enemies",
+		Interact = 'Interact',
+	SectionParent = Section,
+	Options = Enemies,
+	CurrentOption = "Enemy List",
+	Flag = "Dropdown1", 
+	Callback = function(Value)
+		getgenv().enemy = Value
+	end,
+})
+
+
+local function getClosestMob()
+    local dist, thing = math.huge
+    for i, v in next, game:GetService("Workspace").NPCS:GetDescendants() do
+      if  v.Name == "HumanoidRootPart" and v.Parent.Name == enemy then
+            local mag =
+                (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
+            if mag < dist then
+                dist = mag
+                thing = v
+            end
+        end
+    end
+    return thing
+end
+local autoenemies = Tab:CreateToggle({
+	Name = "Auto Teleport Selected Mob",
+		Interact = 'Interact',
+	SectionParent = Section,
+	CurrentValue = false,
+	Flag = "Toggle2", 
+	Callback = function(Value)
+		b = Value
+            while b do task.wait()
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = getClosestMob().CFrame * CFrame.new(0,0,7)
+		end
+		autoonoff:Set(true)
+	end,
+})
+
+local autoonoff = Tab:CreateToggle({
+	Name = "Auto Open/Off Teleport Mob Toggle",
+	Interact = 'Interact',
+	SectionParent = Section,
+	CurrentValue = false,
+	Flag = "Toggle2", 
+	Callback = function(Value)
+		basdasd = Value
+            while basdasd do task.wait()
+            autoenemies:Set(true)
+            autoenemies:Set(false)
+		end
+	end,
+})
+
+local Tab1 = Window:CreateTab("Quest")
+
+local Sc2 = Tab1:CreateSection("Quest",false)
+
+local eggs ={}
+
+for _,v in pairs(game:GetService("Workspace")["Quest NPCS"]:GetChildren()) do
+    table.insert(eggs,v.Name)
+end
+
+local eggtoopen
+local Dropdown = Tab1:CreateDropdown({
+	Name = "Quest",
+	Interact = 'Interact',
+	SectionParent = Sc2,
+	Options = eggs,
+	CurrentOption = "",
+	Flag = "Select Quest",
+	Callback = function(Option)
+        eggtoopen = Option
+	end,
+})
+
+local openegg
+Tab1:CreateToggle({
+	Name = "Enable Quest",
+		Interact = 'Interact',
+	SectionParent = Sc2,
+	CurrentValue = false,
+	Flag = "Accept Quest",
+	Callback = function(Value)
+		openegg = Value
+        if Value then
+            spawn(function()
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["__MAP"].Interactions.Eggs[eggtoopen]["Egg"].CFrame * CFrame.new(0,0,4)
+                openegg_func()
+            end)
+        end
+	end,
+})
+
+function openegg_func()
+    spawn(function()
+        while wait(0.5) and openegg do
+local args = {
+    [1] = workspace:FindFirstChild("Quest NPCS"):FindFirstChild(eggtoopen).HumanoidRootPart.QuestActivator.Quest}
+game:GetService("ReplicatedStorage"):FindFirstChild("Quest Remote Events").EnableQuest:FireServer(unpack(args))
+        
+        end
+    end)
+end
+
+local Tab3 = Window:CreateTab("📖 Others")
+
+local discord = Tab3:CreateSection("Discord",false)
+
+local Button = Tab3:CreateButton({
+   Name = "Copy Discord Invite",
+   	Interact = 'Interact',
+	SectionParent = discord,
+   Callback = function()
+   setclipboard("discord.gg/RVnjYRWNA9")
+   end,
+})
+
+
+local Mm = Tab3:CreateSection("Movement",false)
+local walkspeed
+local delrunning = false
+Tab3:CreateSlider({
+	Name = "Walk Speed (0 for default running)",
+	   	Interact = 'Interact',
+	SectionParent = Mm,
+	Range = {0, 500},
+	Increment = 10,
+	Suffix = "",
+	CurrentValue = 0,
+	Flag = "Walk Speed",
+	Callback = function(Value)
+		walkspeed = Value
+        if Value ~= 0 then
+            delrunning = true
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+        end
+	end,
+})
+spawn(function() -- sorry for dumb code but im honestly clueless because of the way the character model works
+    while wait(5) do
+        if delrunning then
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = walkspeed
+            pcall(function() game.Workspace:FindFirstChild("Running",1):Destroy() end)
+        end
+    end
+end)
+
+Tab3:CreateToggle({
+	Name = "Inf Jump",
+		   	Interact = 'Interact',
+	SectionParent = Mm,
+	CurrentValue = false,
+	Flag = "Toggle50", 
+	Callback = function(Value)
+    antiAfk = Value
+            while antiAfk do task.wait(0.1)
+local Player = game:GetService'Players'.LocalPlayer;
+local UIS = game:GetService'UserInputService';
+ 
+_G.JumpHeight = 50;
+ 
+function Action(Object, Function) if Object ~= nil then Function(Object); end end
+ 
+UIS.InputBegan:connect(function(UserInput)
+    if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.Space then
+        Action(Player.Character.Humanoid, function(self)
+            if self:GetState() == Enum.HumanoidStateType.Jumping or self:GetState() == Enum.HumanoidStateType.Freefall then
+                Action(self.Parent.HumanoidRootPart, function(self)
+                    self.Velocity = Vector3.new(0, _G.JumpHeight, 0);
+                end)
+            end
+        end)
+    end
+end)
+		end
+	end,
+})
+
+Tab3:CreateToggle({
+	Name = "Anti Afk",
+		   	Interact = 'Interact',
+	SectionParent = Mm,
+	CurrentValue = false,
+	Flag = "Toggle50", 
+	Callback = function(Value)
+    antiAfk = Value
+            while antiAfk do task.wait(0.1)
+local VirtualUser=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+VirtualUser:CaptureController()
+VirtualUser:ClickButton2(Vector2.new())
+end)
+		end
+	end,
+})
+local Button = Tab3:CreateButton({
+   Name = "Rejoin",
+   	   	Interact = 'Interact',
+	SectionParent = Mm,
+   Callback = function()
+   loadstring(game:HttpGet("https://pastebinp.com/raw/mM7JBG5h"))()
+   end,
+})
+
+local Button = Tab3:CreateButton({
+   Name = "Reset",
+   	   	Interact = 'Interact',
+	SectionParent = Mm,
+   Callback = function()
+   loadstring(game:HttpGet("https://pastebinp.com/raw/EEY6SATj"))()
+   end,
+})
+Rayfield:LoadConfiguration()

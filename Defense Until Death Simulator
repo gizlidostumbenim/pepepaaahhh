@@ -1,0 +1,136 @@
+local client = game.Players.LocalPlayer
+local insta = game.Players.LocalPlayer.Character
+local name = NameLabel
+
+
+local Plr = game.Players.LocalPlayer
+local vu = game:GetService("VirtualUser")
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/CustomFIeld/main/RayField.lua'))()
+
+local Window = Rayfield:CreateWindow({
+	Name = "Defense Until Death Simulator",
+	LoadingTitle = "Oxygen Hub",
+	LoadingSubtitle = "by Oxygen",
+	ConfigurationSaving = {
+		Enabled = true,
+		FolderName = nil, 
+		FileName = "Oxygen"
+	},
+        Discord = {
+        	Enabled = true,
+        	Invite = "RVnjYRWNA9", 
+        	RememberJoins = true
+        },
+      KeySystem = false, -- Set this to true to use our key system
+      KeySettings = {
+      Title = "Oxygen Hub",
+      Subtitle = "Key System",
+      Note = "Join the discord (discord.gg/RVnjYRWNA9)",
+      FileName = "Key",
+      SaveKey = true,
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = "FUCKME"
+   }
+
+})
+
+local Tab = Window:CreateTab("⚔️ Farm")
+local S = Tab:CreateSection("Farming")
+
+local ToLock = {}
+Tab:CreateToggle({
+   Name = "Lock All Toggle",
+   SectionParent = S,
+   Info = "Toggle info/Description.", -- Speaks for itself, Remove if none.
+   CurrentValue = false,
+   Callback = function(Value)
+    if Value then
+     for _,v in ToLock do
+     v:Lock('Locked')
+     end
+     else
+      for _,v in ToLock do
+          v:Unlock('Locked')
+       end
+    end
+   end,
+})
+
+function autoattack()
+game:GetService("ReplicatedStorage").MQTT.battle.AttackHitEvent:FireServer()
+    wait(0.1)
+end
+ToLock.Toggle12 = Tab:CreateToggle({
+	Name = "Auto Attack",
+	Interact = 'Interact',
+	SectionParent = S,
+	CurrentValue = false,
+	Flag = "Toggle1", 
+	Callback = function(Value)
+    attackingsMD4 = Value
+    while attackingsMD4 do wait()
+autoattack()
+		end
+	end,
+})
+ToLock.Toggle124 = Tab:CreateToggle({
+	Name = "Auto Call Army",
+	Interact = 'Interact',
+	SectionParent = S,
+	CurrentValue = false,
+	Flag = "Toggle1", 
+	Callback = function(Value)
+    attackingsMD3 = Value
+    while attackingsMD3 do wait(2)
+local args = {
+    [1] = 2
+}
+game:GetService("ReplicatedStorage").MQTT.battle.CallArmyRF:InvokeServer(unpack(args))
+local args = {
+    [1] = 1
+}
+game:GetService("ReplicatedStorage").MQTT.battle.CallArmyRF:InvokeServer(unpack(args))
+local args = {
+    [1] = 3
+}
+game:GetService("ReplicatedStorage").MQTT.battle.CallArmyRF:InvokeServer(unpack(args))
+
+		end
+	end,
+})
+ToLock.Toggle13 = Tab:CreateToggle({
+	Name = "Auto Summon Towers",
+	Interact = 'Interact',
+	SectionParent = S,
+	CurrentValue = false,
+	Flag = "Toggle1", 
+	Callback = function(Value)
+    attackingsMD = Value
+    while attackingsMD do wait()
+game:GetService("ReplicatedStorage").MQTT.SummonATowerRF:InvokeServer()		
+		end
+	end,
+})
+ToLock.Toggle1 = Tab:CreateToggle({
+	Name = "Auto Summon Units",
+	Interact = 'Interact',
+	SectionParent = S,
+	CurrentValue = false,
+	Flag = "Toggle1", 
+	Callback = function(Value)
+    attackingsMDS = Value
+        while attackingsMDS do wait()
+local args = {
+    [1] = 1
+}
+game:GetService("ReplicatedStorage").MQTT.SummonAunitRF:InvokeServer(unpack(args))	
+		end
+	end,
+})
+
+ function TPTo(PCFrame)
+    local plr = game.Players.LocalPlayer;
+           if plr.Character then
+            plr.Character.HumanoidRootPart.CFrame = PCFrame
+        end
+    end 

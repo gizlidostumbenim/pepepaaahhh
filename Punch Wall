@@ -1,0 +1,178 @@
+local client = game.Players.LocalPlayer
+local insta = game.Players.LocalPlayer.Character
+local name = NameLabel
+
+
+local Plr = game.Players.LocalPlayer
+local vu = game:GetService("VirtualUser")
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/CustomFIeld/main/RayField.lua'))()
+
+local Window = Rayfield:CreateWindow({
+	Name = "Punch Wall Simulator",
+	LoadingTitle = "Oxygen Hub",
+	LoadingSubtitle = "by Oxygen",
+	ConfigurationSaving = {
+		Enabled = true,
+		FolderName = nil, 
+		FileName = "Oxygen"
+	},
+        Discord = {
+        	Enabled = true,
+        	Invite = "RVnjYRWNA9", 
+        	RememberJoins = true
+        },
+      KeySystem = false, -- Set this to true to use our key system
+      KeySettings = {
+      Title = "Oxygen Hub",
+      Subtitle = "Key System",
+      Note = "Join the discord (discord.gg/RVnjYRWNA9)",
+      FileName = "Key",
+      SaveKey = true,
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = "FUCKME"
+   }
+
+})
+
+local Tab = Window:CreateTab("⚔️ Farm")
+local S = Tab:CreateSection("Farming")
+
+local ToLock = {}
+Tab:CreateToggle({
+   Name = "Lock All Toggle",
+   SectionParent = S,
+   Info = "Toggle info/Description.", -- Speaks for itself, Remove if none.
+   CurrentValue = false,
+   Callback = function(Value)
+    if Value then
+     for _,v in ToLock do
+     v:Lock('Locked')
+     end
+     else
+      for _,v in ToLock do
+          v:Unlock('Locked')
+       end
+     end
+   end,
+})
+
+ToLock.Toggle1246 = Tab:CreateToggle({
+	Name = "Auto Rebirth",
+	Interact = 'Interact',
+	SectionParent = S,
+	CurrentValue = false,
+	Flag = "Toggle1", 
+	Callback = function(Value)
+    attackingsMD3 = Value
+    while attackingsMD3 do wait(2)
+local args = {
+    [1] = 3
+}
+game:GetService("ReplicatedStorage"):FindFirstChild("functions-shared/network@GlobalFunctions"):FindFirstChild("s:rebirth"):FireServer(unpack(args))
+		end
+	end,
+})
+ToLock.Toggle124 = Tab:CreateToggle({
+	Name = "Auto Spin",
+	Interact = 'Interact',
+	SectionParent = S,
+	CurrentValue = false,
+	Flag = "Toggle1", 
+	Callback = function(Value)
+    attackingsMD34 = Value
+    while attackingsMD34 do wait(1)
+local args = {
+    [1] = 20
+}
+
+game:GetService("ReplicatedStorage"):FindFirstChild("functions-shared/network@GlobalFunctions"):FindFirstChild("s:spin"):FireServer(unpack(args))
+		
+		end
+	end,
+})
+ToLock.Toggle13 = Tab:CreateToggle({
+	Name = "Auto Craft All Pet",
+	Interact = 'Interact',
+	SectionParent = S,
+	CurrentValue = false,
+	Flag = "Toggle1", 
+	Callback = function(Value)
+    attackingsMD = Value
+    while attackingsMD do wait(1)
+local args = {
+    [1] = 13
+}
+
+game:GetService("ReplicatedStorage"):FindFirstChild("functions-shared/network@GlobalFunctions"):FindFirstChild("s:craftAllPets"):FireServer(unpack(args))
+	
+		end
+	end,
+})
+ToLock.Toggle1 = Tab:CreateToggle({
+	Name = "Auto Equip Best Pet",
+	Interact = 'Interact',
+	SectionParent = S,
+	CurrentValue = false,
+	Flag = "Toggle1", 
+	Callback = function(Value)
+    attackingsMDS = Value
+        while attackingsMDS do wait(0.5)
+local args = {
+    [1] = 10
+}
+
+game:GetService("ReplicatedStorage"):FindFirstChild("functions-shared/network@GlobalFunctions"):FindFirstChild("s:equipBestPets"):FireServer(unpack(args))
+		
+		end
+	end,
+})
+local eggs ={}
+
+for _,v in pairs(game:GetService("Workspace"):GetChildren()) do
+    table.insert(eggs,v.Name)
+end
+
+local eggtoopen
+local Dropdown = Tab:CreateDropdown({
+	Name = "Egg to open (current zone)",
+	Options = eggs,
+	CurrentOption = "",
+	Flag = "Star to open",
+	Callback = function(Option)
+        eggtoopen = Option
+	end,
+})
+
+local openegg
+Tab:CreateToggle({
+	Name = "Open Egg",
+	CurrentValue = false,
+	Flag = "Open Stars",
+	Callback = function(Value)
+		openegg = Value
+        if Value then
+            spawn(function()
+                openegg_func()
+            end)
+        end
+	end,
+})
+
+function openegg_func()
+    spawn(function()
+        while wait(0.5) and openegg do
+local args = {
+    [1] = 24,
+    [2] = eggtoopen
+}
+game:GetService("ReplicatedStorage"):FindFirstChild("functions-shared/network@GlobalFunctions"):FindFirstChild("s:openEgg"):FireServer(unpack(args))
+
+        end
+    end)
+end
+ function TPTo(PCFrame)
+    local plr = game.Players.LocalPlayer;
+           if plr.Character then
+            plr.Character.HumanoidRootPart.CFrame = PCFrame
+        end
+    end 

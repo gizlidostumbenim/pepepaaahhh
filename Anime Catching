@@ -34,6 +34,33 @@ local Window = Rayfield:CreateWindow({
 
 local Tab = Window:CreateTab("⚔️ Farm")
 local S = Tab:CreateSection("Farming")
+function caganss()
+    local button = game:service'VirtualInputManager'
+    local X, Y = 0, 0
+
+    button:SendKeyEvent(true, "E", false, game)
+    wait(0.1)
+end
+    Tab:CreateToggle({
+	Name = "Auto Farm Dungeon",
+	CurrentValue = false,
+	Flag = "Toggle1", 
+	Callback = function(Value)
+    attackingsMD = Value
+local args = {[1] = "\229\137\175\230\156\172"}game:GetService("ReplicatedStorage").ServerMsg.Teleport:FireServer(unpack(args)) wait(1)
+TPTo(CFrame.new(3462.33008, 2.4229157, -68.1724777, 0.998950601, 1.97691854e-08, 0.0458005257, -1.54208877e-08, 1, -9.52932098e-08, -0.0458005257, 9.44869214e-08, 0.998950601)) wait(1)
+caganss()
+            while attackingsMD do task.wait()  
+TPTo(CFrame.new(3490.69604, 0.894156456, 3485.87329, 0.999527276, -3.11791695e-08, 0.0307439882, 3.37323449e-08, 1, -8.25276558e-08, -0.0307439882, 8.35257126e-08, 0.999527276)) wait(0.3)
+TPTo(CFrame.new(3492.3313, 1.61112905, 3504.10425, -0.0132313864, -7.09179604e-09, -0.999912441, -9.34108613e-09, 1, -6.96881042e-09, 0.999912441, 9.24806098e-09, -0.0132313864)) wait(0.4)
+TPTo(CFrame.new(3490.16992, 2.39591765, 3531.66138, -0.999833047, 1.539415e-08, 0.0182708502, 1.60005023e-08, 1, 3.30407133e-08, -0.0182708502, 3.33275416e-08, -0.999833047)) wait(0.3)
+TPTo(CFrame.new(3518.84253, 2.44128561, 3532.04712, -0.0489498712, 4.68679353e-08, -0.998801231, 1.25559776e-08, 1, 4.63088377e-08, 0.998801231, -1.0274114e-08, -0.0489498712)) wait(0.3)
+TPTo(CFrame.new(3519.15625, 1.91097808, 3507.85449, 0.991513014, -4.45234827e-09, -0.130007535, -8.68366712e-10, 1, -4.08695193e-08, 0.130007535, 4.06355554e-08, 0.991513014)) wait(0.4)
+TPTo(CFrame.new(3519.67139, 1.03628278, 3484.84009, 0.998978078, 6.24289953e-09, -0.0451974496, -7.14957737e-09, 1, -1.9898728e-08, 0.0451974496, 2.02015364e-08, 0.998978078)) wait(0.3)
+TPTo(CFrame.new(3503.31055, 1.7049582, 3503.8418, -0.869938314, -5.15415053e-08, -0.493160546, -1.555766e-08, 1, -7.70688189e-08, 0.493160546, -5.93726917e-08, -0.869938314)) wait(0.3)
+		end
+	end,
+})
 
 local function getClosestMob()
     local dist, thing = math.huge
@@ -158,7 +185,7 @@ game:GetService("ReplicatedStorage").System.SystemClick.Click:FireServer()
 		end
 	end,
 })
-CreateToggle("AutoFarm", Settings.Cum, function(State)
+
 Tab:CreateToggle({
 	Name = "Auto Rebirth",
 	Interact = 'Interact',

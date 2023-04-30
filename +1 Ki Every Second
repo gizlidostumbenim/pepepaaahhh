@@ -1,0 +1,187 @@
+local client = game.Players.LocalPlayer
+local insta = game.Players.LocalPlayer.Character
+local name = game:GetService("MarketplaceService"):GetProductInfo(12524383962).Name;
+
+
+local Plr = game.Players.LocalPlayer
+local vu = game:GetService("VirtualUser")
+local Rayfield = loadstring(game:HttpGet(('https://raw.githubusercontent.com/teehee567/Rayfield-Backupt/main/source')))()
+
+local Window = Rayfield:CreateWindow({
+	Name = name,
+	LoadingTitle = "Oxygen Hub",
+	LoadingSubtitle = "by Oxygen",
+	ConfigurationSaving = {
+		Enabled = true,
+		FolderName = nil, 
+		FileName = "Oxygen"
+	},
+        Discord = {
+        	Enabled = true,
+        	Invite = "RVnjYRWNA9", 
+        	RememberJoins = true
+        },
+      KeySystem = false, -- Set this to true to use our key system
+      KeySettings = {
+      Title = "Oxygen Hub",
+      Subtitle = "Key System",
+      Note = "Join the discord (discord.gg/RVnjYRWNA9)",
+      FileName = "Key",
+      SaveKey = true,
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = "FUCKME"
+   }
+
+})
+
+local Tab = Window:CreateTab("⚔️ Farm")
+local S = Tab:CreateSection("Farming")
+
+    Tab:CreateToggle({
+	Name = "Auto Farm",
+	CurrentValue = false,
+	Flag = "Toggle1", 
+	Callback = function(Value)
+    attackingsMD3 = Value
+    while attackingsMD3 do wait()
+local args = {[1] = workspace.World:FindFirstChild("1").Part,[2] = true}game:GetService("ReplicatedStorage").Events.Player.DmgHandle:FireServer(unpack(args))
+local args = {[1] = workspace.World:FindFirstChild("2").Part,[2] = true}game:GetService("ReplicatedStorage").Events.Player.DmgHandle:FireServer(unpack(args))
+local args = {[1] = workspace.World:FindFirstChild("3").Part,[2] = true}game:GetService("ReplicatedStorage").Events.Player.DmgHandle:FireServer(unpack(args))
+local args = {[1] = workspace.World:FindFirstChild("4").Part,[2] = true}game:GetService("ReplicatedStorage").Events.Player.DmgHandle:FireServer(unpack(args))
+local args = {[1] = workspace.World:FindFirstChild("5").Part,[2] = true}game:GetService("ReplicatedStorage").Events.Player.DmgHandle:FireServer(unpack(args))
+local args = {[1] = workspace.World:FindFirstChild("6").Part,[2] = true}game:GetService("ReplicatedStorage").Events.Player.DmgHandle:FireServer(unpack(args))
+local args = {[1] = workspace.World:FindFirstChild("7").Part,[2] = true}game:GetService("ReplicatedStorage").Events.Player.DmgHandle:FireServer(unpack(args))
+local args = {[1] = workspace.World:FindFirstChild("8").Part,[2] = true}game:GetService("ReplicatedStorage").Events.Player.DmgHandle:FireServer(unpack(args))
+local args = {[1] = workspace.World:FindFirstChild("9").Part,[2] = true}game:GetService("ReplicatedStorage").Events.Player.DmgHandle:FireServer(unpack(args))
+local args = {[1] = workspace.World:FindFirstChild("10").Part,[2] = true}game:GetService("ReplicatedStorage").Events.Player.DmgHandle:FireServer(unpack(args))
+local args = {[1] = workspace.World:FindFirstChild("11").Part,[2] = true}game:GetService("ReplicatedStorage").Events.Player.DmgHandle:FireServer(unpack(args))
+local args = {[1] = workspace.World:FindFirstChild("12").Part,[2] = true}game:GetService("ReplicatedStorage").Events.Player.DmgHandle:FireServer(unpack(args))
+local args = {[1] = workspace.World:FindFirstChild("13").Part,[2] = true}game:GetService("ReplicatedStorage").Events.Player.DmgHandle:FireServer(unpack(args))
+local args = {[1] = workspace.World:FindFirstChild("14").Part,[2] = true}game:GetService("ReplicatedStorage").Events.Player.DmgHandle:FireServer(unpack(args))
+local args = {[1] = workspace.World:FindFirstChild("15").Part,[2] = true}game:GetService("ReplicatedStorage").Events.Player.DmgHandle:FireServer(unpack(args))
+		end
+	end,
+})
+
+Tab:CreateToggle({
+	Name = "Auto Rebirth",
+	CurrentValue = false,
+	Flag = "Toggle1", 
+	Callback = function(Value)
+    attackingsMD34 = Value
+    while attackingsMD34 do wait(0.5)
+game:GetService("ReplicatedStorage").Events.Player.RebirthEvent:FireServer()	
+		end
+	end,
+})
+
+   Tab:CreateToggle({
+	Name = "Get Gamepass",
+	CurrentValue = false,
+	Flag = "Toggle1", 
+	Callback = function()
+for _, v in next, client.GamePass:GetChildren() do
+    if v.Value then
+    v.Value = 1
+        end
+      end
+    end,
+})
+
+
+local Tab1 = Window:CreateTab("Egg")
+local SS = Tab1:CreateSection("Egg")
+
+
+    Tab1:CreateToggle({
+	Name = "Auto Equip Best Pet",
+	CurrentValue = false,
+	Flag = "Toggle1", 
+	Callback = function(Value)
+    attackingsMDS = Value
+        while attackingsMDS do wait(0.5)
+game:GetService("ReplicatedStorage").Events.Pet.EquipBest:FireServer()		
+		end
+	end,
+})
+
+
+
+local Dropdown = Tab1:CreateDropdown({
+   Name = "Select Egg",
+   Options = {"Egg 1","Egg 2","Egg 3","Egg 4","Egg 5","Egg 6","Egg 7","Egg 8","Egg 9","Egg 10","Egg 11","Egg 12","Egg 13","Egg 14","Egg 15","Egg 16","Egg 17","Egg 18","Egg 19","Egg 20"},
+   CurrentOption = "Select",
+   Flag = "Select Egg", 
+   Callback = function(value)
+    getgenv().eggType = value
+    end,
+}) 
+
+
+
+Tab1:CreateToggle({
+	Name = "Selected Hatch",
+	CurrentValue = false,
+	Flag = "Selected Hatch",
+	Callback = function(value)
+	getgenv().autoHatch = value
+	if value then
+            doHatch();
+        end
+	end,
+})
+
+function doHatch()
+spawn(function()
+        while autoHatch and wait() do
+    if getgenv().eggType == "Egg 1" then
+local args = {[1] = "draw001",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 2" then
+local args = {[1] = "draw002",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 3" then
+local args = {[1] = "draw003",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 4" then
+local args = {[1] = "draw004",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 5" then
+local args = {[1] = "draw005",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 6" then
+local args = {[1] = "draw006",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 7" then
+local args = {[1] = "draw007",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 8" then
+local args = {[1] = "draw008",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 9" then
+local args = {[1] = "draw009",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 10" then
+local args = {[1] = "draw010",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 11" then
+local args = {[1] = "draw011",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 12" then
+local args = {[1] = "draw012",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 13" then
+local args = {[1] = "draw013",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 14" then
+local args = {[1] = "draw014",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 15" then
+local args = {[1] = "draw015",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 16" then
+local args = {[1] = "draw016",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 17" then
+local args = {[1] = "draw017",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 18" then
+local args = {[1] = "draw018",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 19" then
+local args = {[1] = "draw019",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+    elseif getgenv().eggType == "Egg 20" then
+local args = {[1] = "draw020",[2] = 1}game:GetService("ReplicatedStorage").Events.Player.Draw.DrawRequest:FireServer(unpack(args))
+            end
+        end
+    end)
+end
+
+ function TPTo(PCFrame)
+    local plr = game.Players.LocalPlayer;
+           if plr.Character then
+            plr.Character.HumanoidRootPart.CFrame = PCFrame
+        end
+    end 

@@ -92,29 +92,30 @@ Tab:CreateToggle({
 })
 
 Tab:CreateToggle({
-    Name = "Auto Attack (maintenance)",
+    Name = "Auto Attack Area",
     CurrentValue = false,
     Flag = "Toggle2", 
     Callback = function(state)
 getgenv().atckv3 = state
-while wait(0.3) do
+
+while wait() do
     if getgenv().atckv3 == true then
-       for i,v in pairs(game:GetService("Workspace").ClientEnemies:GetDescendants()) do
-       if v:IsA ("Model") and v.Name == "ClientEnemies" then
-    if v.Name == getClosestMob().Name then
+       for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+    if v.Name == getNearest().Name then
         if v:GetAttribute("Warriors") == 0 then
 local args = {
     [1] = {
         [1] = {
             [1] = "&",
-            [2] = getClosestMob().Name
+            [2] = getNearest().Name
         }
     }
 }
 
 game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
-                end
-            end
+           else
+                print("OXYGEN HUB")
+        end
         end
         end
     end
@@ -122,15 +123,6 @@ end
     end,
 })
 Tab:CreateParagraph({Title = "Other Farm", Content = "Good Luck"})
-Tab:CreateButton({
-    Name = "Best Script Execute",
-    CurrentValue = false,
-    Flag = "Toggle2", 
-    Callback = function(state)
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Binintrozza/GUI-SCRIPT/main/AWS2"))()
-    end,
-})
 
 Tab:CreateToggle({
     Name = "Auto Click",

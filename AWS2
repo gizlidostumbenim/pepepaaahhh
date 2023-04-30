@@ -1,0 +1,451 @@
+eggTable = {}
+for _,v in pairs(game:GetService("ReplicatedStorage").Eggs:GetChildren()) do
+    if not table.find(eggTable, v.Name) then
+       table.insert(eggTable, v.Name)
+    end
+end
+
+local name = game:GetService("MarketplaceService"):GetProductInfo(8425128940).Name;
+
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   wait(1)
+   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+
+local VirtualInputManager = game:GetService('VirtualInputManager')
+
+local player = game.Players.LocalPlayer
+
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/gizlidostumbenim/library/main/library'))()
+local Window = Rayfield:CreateWindow({
+	Name = name,
+	LoadingTitle = "Oxygen Hub",
+	LoadingSubtitle = "Loading...",
+	ConfigurationSaving = {
+		Enabled = true,
+		FolderName = nil, 
+		FileName = "l"
+	},
+        Discord = {
+        	Enabled = true,
+        	Invite = "RVnjYRWNA9", 
+        	RememberJoins = true
+        },
+      KeySystem = false, -- Set this to true to use our key system
+      KeySettings = {
+      Title = "l",
+      Subtitle = "Key System",
+      Note = "Join the discord (discord.gg/)",
+      FileName = "Key",
+      SaveKey = true,
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = "l"
+   }
+
+})
+
+local Tab = Window:CreateTab("⚔️ Farm")
+
+local Section = Tab:CreateSection("Farming")
+Tab:CreateParagraph({Title = "Auto Farm", Content = ":)"})
+
+local function getClosestMob()
+    local dist, thing = math.huge
+    for i, v in next, game:GetService("Workspace").ClientEnemies:GetDescendants() do
+        if v.Name == "Hitbox"  then
+            local mag = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
+            if mag < dist then
+                dist = mag
+                thing = v
+            end
+        end
+    end
+    if thing then
+        return thing
+    else
+        return nil
+    end
+end
+
+
+Tab:CreateToggle({
+    Name = "Auto TP Mob Area",
+    CurrentValue = false,
+    Flag = "Toggle2", 
+    Callback = function(Value)
+        b = Value
+        while b do
+            task.wait()
+            repeat
+                task.wait()
+            until game.Players.LocalPlayer.Character ~= nil
+            local mob = getClosestMob()
+            if mob then
+                local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+                local tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, {CFrame = mob.CFrame})
+                tween:Play()
+            end
+        end
+    end,
+})
+
+Tab:CreateToggle({
+    Name = "Auto Attack (maintenance)",
+    CurrentValue = false,
+    Flag = "Toggle2", 
+    Callback = function(state)
+getgenv().atckv3 = state
+while wait(0.3) do
+    if getgenv().atckv3 == true then
+       for i,v in pairs(game:GetService("Workspace").ClientEnemies:GetDescendants()) do
+       if v:IsA ("Model") and v.Name == "ClientEnemies" then
+    if v.Name == getClosestMob().Name then
+        if v:GetAttribute("Warriors") == 0 then
+local args = {
+    [1] = {
+        [1] = {
+            [1] = "&",
+            [2] = getClosestMob().Name
+        }
+    }
+}
+
+game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+                end
+            end
+        end
+        end
+    end
+end
+    end,
+})
+Tab:CreateParagraph({Title = "Other Farm", Content = "Good Luck"})
+Tab:CreateButton({
+    Name = "Best Script Execute",
+    CurrentValue = false,
+    Flag = "Toggle2", 
+    Callback = function(state)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Binintrozza/GUI-SCRIPT/main/AWS2"))()
+    end,
+})
+
+Tab:CreateToggle({
+    Name = "Auto Click",
+    CurrentValue = false,
+    Flag = "Toggle2", 
+    Callback = function(state)
+autoattacking = state
+while autoattacking do wait()
+local args = {
+    [1] = {
+        [1] = {
+            [1] = "'"
+        }
+    }
+}
+
+game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+end
+    end,
+})
+
+Tab:CreateToggle({
+    Name = "Auto Rank Reward",
+    CurrentValue = false,
+    Flag = "Toggle2", 
+    Callback = function(state)
+autoattackings = state
+while autoattackings do wait()
+local args = {[1] = {[1] = {[1] = "[",[2] = 1}}}game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+local args = {[1] = {[1] = {[1] = "[",[2] = 2}}}game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+local args = {[1] = {[1] = {[1] = "[",[2] = 3}}}game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+local args = {[1] = {[1] = {[1] = "[",[2] = 4}}}game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+local args = {[1] = {[1] = {[1] = "[",[2] = 5}}}game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+local args = {[1] = {[1] = {[1] = "[",[2] = 6}}}game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+local args = {[1] = {[1] = {[1] = "[",[2] = 7}}}game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+local args = {[1] = {[1] = {[1] = "[",[2] = 8}}}game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+local args = {[1] = {[1] = {[1] = "[",[2] = 9}}}game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+local args = {[1] = {[1] = {[1] = "[",[2] = 10}}}game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+       end
+    end,
+})
+
+Tab:CreateToggle({
+    Name = "Auto Collect Drop",
+    CurrentValue = false,
+    Flag = "Toggle2", 
+    Callback = function(state)
+getgenv().collectv2 = state
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    if getgenv().collectv2 == true then
+        for i,v in pairs(game:GetService("Workspace").Drops:GetChildren()) do
+            if v.ClassName == "Part" then
+                v.CFrame = game.Players.LocalPlayer.Character.Head.CFrame
+            end
+        end
+    end
+end)
+    end,
+})
+
+Tab:CreateToggle({
+    Name = "Auto Achievements",
+    CurrentValue = false,
+    Flag = "Toggle2", 
+    Callback = function(state)
+getgenv().ach = state
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    if getgenv().ach == true then
+        for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Frames.Achievements.Frame.Container:GetChildren()) do
+    if v.ClassName == "Frame" then
+local args = {
+    [1] = {
+        [1] = {
+            [1] = ">",
+            [2] = v.Name
+        }
+    }
+}
+
+game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+    end
+end
+    end
+end)
+    end,
+})
+Tab:CreateParagraph({Title = "Auto Quest", Content = "Select NPC"})
+local Dropdown = Tab:CreateDropdown({
+   Name = "Select Npc",
+   	SectionParent = S2,
+	CurrentValue = false,
+    Options = {"Nami","Sensei","Whisperer","Protector Weakened","Celestia","Trains","Soar","Butterfly"},
+    CurrentOption = "Select",
+    Flag = "Select Egg", 
+    Callback = function(value)
+    getgenv().eggType = value
+    end,
+}) 
+
+
+
+Tab:CreateToggle({
+	Name = "Selected Accept Quest",
+	SectionParent = S2,
+	CurrentValue = false,
+	Flag = "Selected Hatch",
+	Callback = function(value)
+	getgenv().autoHatch = value
+	if value then
+            doHatch();
+        end
+	end,
+})
+
+function doHatch()
+spawn(function()
+        while autoHatch and wait() do
+    if getgenv().eggType == "Nami" then
+local args = {[1] = {[1] = {[1] = "@",[2] = "Nemi TS"}}}game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+    
+    elseif getgenv().eggType == "Sensei" then
+local args = {[1] = {[1] = {[1] = "@",[2] = "Sensei"}}}game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+    
+    elseif getgenv().eggType == "Protector Weakened" then
+local args = {[1] = {[1] = {[1] = "@",[2] = "Protector Weakened"}}}game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+    
+    elseif getgenv().eggType == "Celestia" then
+local args = {[1] = {[1] = {[1] = "@",[2] = "Celestia"}}}game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+    
+    elseif getgenv().eggType == "Trains" then
+local args = {[1] = {[1] = {[1] = "@",[2] = "Trains"}}}game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+    
+    elseif getgenv().eggType == "Soar" then
+local args = {[1] = {[1] = {[1] = "@",[2] = "Soar"}}}game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+    
+    elseif getgenv().eggType == "Butterfly" then
+local args = {[1] = {[1] = {[1] = "@",[2] = "Butterfly"}}}game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+    
+    elseif getgenv().eggType == "Whisperer" then
+local args = {[1] = {[1] = {[1] = "@",[2] = "Whisperer"}}}game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+     
+            end
+        end
+    end)
+end
+
+local Tab2 = Window:CreateTab("Egg")
+
+local Section = Tab2:CreateSection("Egg")
+Tab2:CreateToggle({
+    Name = "Auto Equip Best Pet",
+    CurrentValue = false,
+    Flag = "Toggle2", 
+    Callback = function(state)
+autoattacking1 = state
+while autoattacking1 do wait(1)
+local args = {
+    [1] = {
+        [1] = {
+            [1] = "\25"
+        }
+    }
+}
+
+game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+
+end
+    end,
+})
+local selectedegg
+local drop = Tab2:CreateDropdown({
+    Name = "Select Egg",
+    Options = eggTable,
+    CurrentOption = {"Enemy List"},
+    MultipleOptions = false,
+    Flag = "Dropdown1", 
+    Callback = function(v)
+    print(v)
+selectedegg = v
+    end,
+})
+
+Tab2:CreateToggle({
+    Name = "Auto Open Egg",
+    CurrentValue = false,
+    Flag = "Toggle2", 
+    Callback = function(state)
+getgenv().buy2 = state
+
+while wait() do
+    if getgenv().buy2 == true then
+       for i,v in pairs(game:GetService("ReplicatedStorage").Eggs:GetChildren()) do
+           if v.Name == selectedegg then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v:FindFirstChildOfClass("MeshPart").CFrame
+           end
+       end
+local args = {
+    [1] = selectedegg,
+    [3] = false
+}
+
+game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Open:InvokeServer(unpack(args))
+    end
+end
+    end,
+})
+
+local Tab3 = Window:CreateTab("📖 Others")
+
+local discord = Tab3:CreateSection("Discord",false)
+
+local Button = Tab3:CreateButton({
+   Name = "Copy Discord Invite",
+   	Interact = 'Interact',
+	SectionParent = discord,
+   Callback = function()
+   setclipboard("discord.gg/RVnjYRWNA9")
+   end,
+})
+
+
+local Mm = Tab3:CreateSection("Movement",false)
+local walkspeed
+local delrunning = false
+Tab3:CreateSlider({
+	Name = "Walk Speed (0 for default running)",
+	   	Interact = 'Interact',
+	SectionParent = Mm,
+	Range = {0, 500},
+	Increment = 10,
+	Suffix = "",
+	CurrentValue = 0,
+	Flag = "Walk Speed",
+	Callback = function(Value)
+		walkspeed = Value
+        if Value ~= 0 then
+            delrunning = true
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+        end
+	end,
+})
+spawn(function() -- sorry for dumb code but im honestly clueless because of the way the character model works
+    while wait(5) do
+        if delrunning then
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = walkspeed
+            pcall(function() game.Workspace:FindFirstChild("Running",1):Destroy() end)
+        end
+    end
+end)
+
+Tab3:CreateToggle({
+	Name = "Inf Jump",
+		   	Interact = 'Interact',
+	SectionParent = Mm,
+	CurrentValue = false,
+	Flag = "Toggle50", 
+	Callback = function(Value)
+    antiAfk = Value
+            while antiAfk do task.wait(0.1)
+local Player = game:GetService'Players'.LocalPlayer;
+local UIS = game:GetService'UserInputService';
+ 
+_G.JumpHeight = 50;
+ 
+function Action(Object, Function) if Object ~= nil then Function(Object); end end
+ 
+UIS.InputBegan:connect(function(UserInput)
+    if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.Space then
+        Action(Player.Character.Humanoid, function(self)
+            if self:GetState() == Enum.HumanoidStateType.Jumping or self:GetState() == Enum.HumanoidStateType.Freefall then
+                Action(self.Parent.HumanoidRootPart, function(self)
+                    self.Velocity = Vector3.new(0, _G.JumpHeight, 0);
+                end)
+            end
+        end)
+    end
+end)
+		end
+	end,
+})
+
+Tab3:CreateToggle({
+	Name = "Anti Afk",
+		   	Interact = 'Interact',
+	SectionParent = Mm,
+	CurrentValue = false,
+	Flag = "Toggle50", 
+	Callback = function(Value)
+    antiAfk = Value
+            while antiAfk do task.wait(0.1)
+local VirtualUser=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+VirtualUser:CaptureController()
+VirtualUser:ClickButton2(Vector2.new())
+end)
+		end
+	end,
+})
+local Button = Tab3:CreateButton({
+   Name = "Rejoin",
+   	   	Interact = 'Interact',
+	SectionParent = Mm,
+   Callback = function()
+   loadstring(game:HttpGet("https://pastebinp.com/raw/mM7JBG5h"))()
+   end,
+})
+
+local Button = Tab3:CreateButton({
+   Name = "Reset",
+   	   	Interact = 'Interact',
+	SectionParent = Mm,
+   Callback = function()
+   loadstring(game:HttpGet("https://pastebinp.com/raw/EEY6SATj"))()
+   end,	
+})
+Rayfield:LoadConfiguration()

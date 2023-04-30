@@ -162,7 +162,14 @@ Tab:CreateToggle({
 })
 
 
-
+ Tab:CreateButton({
+	Name = "Other Script Execute",
+	CurrentValue = false,
+	Flag = "Toggle1", 
+	Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/WHYSTRIV3/DumbHubLoadStrings/main/AnimeCatchingSimulator.lua"))()
+    end,
+})
 
 
 

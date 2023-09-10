@@ -409,23 +409,6 @@ Tab:CreateToggle({
     end,
 })
 
-local function getClosestMob()
-    local dist, thing = math.huge
-    for i, v in next, game:GetService("Workspace").BreakableParts.Dungeon:GetDescendants() do
-        if v.Name == "Head" then
-            local mag = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
-            if mag < dist then
-                dist = mag
-                thing = v
-            end
-        end
-    end
-    if thing then
-        return thing
-    else
-        return nil
-    end
-end
 
 local S11 = Tab:CreateSection("Dungeon")
 
@@ -458,8 +441,40 @@ Tab:CreateToggle({
         end
     end,
 })
+local delay3
+	Tab:CreateSlider({
+		Name = "Auto Farm Dungeon Toggle Reset Delay ( /s )",
+		Range = {
+			1,
+			15
+		},
+		Increment = 1,
+		Suffix = "/s",
+		CurrentValue = 1,
+		Callback = function(value)
+        delay3 = value
+		end
+	})
 
-Tab:CreateToggle({
+local function getClosestMob()
+    local dist, thing = math.huge
+    for i, v in next, game:GetService("Workspace").BreakableParts.Dungeon:GetDescendants() do
+        if v.Name == "Head" then
+            local mag = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
+            if mag < dist then
+                dist = mag
+                thing = v
+            end
+        end
+    end
+    if thing then
+        return thing
+    else
+        return nil
+    end
+end
+
+local dungeon = Tab:CreateToggle({
     Name = "Auto Farm Dungeon",
     CurrentValue = false,
     Callback = function(Value)
@@ -478,6 +493,18 @@ Tab:CreateToggle({
             end
         end
     end,
+})
+
+Tab:CreateToggle({
+	Name = "Auto Farm Dungeon Toggle Reset",
+	CurrentValue = false,
+	Callback = function(Value)
+    dungeonreset = Value
+            while dungeonreset do task.wait(delay3)
+dungeon:Set(false)
+dungeon:Set(true)
+		end
+	end,
 })
 
 Tab:CreateToggle({

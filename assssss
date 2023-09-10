@@ -134,7 +134,7 @@ Tab:CreateToggle({
 	CurrentValue = false,
 	Callback = function(Value)
 		openegg11 = Value
-         while openegg11 do wait(0.1)
+         while openegg11 do wait(0.3)
 			game:GetService("ReplicatedStorage").Remote.Event.Game["[C-S]PlayerClick"]:FireServer()  
 			local args = {[1] = "p1"} game:GetService("ReplicatedStorage").Remote.Event.Skin["[C-S]TryEquipBestSkin"]:FireServer(unpack(args))     
 		end
@@ -145,7 +145,7 @@ Tab:CreateToggle({
 	CurrentValue = false,
 	Callback = function(Value)
 		openegg111 = Value
-         while openegg111 do wait(0.1)
+         while openegg111 do wait(0.3)
 			game:GetService("ReplicatedStorage").Remote.Event.Game["[C-S]PlayerClick"]:FireServer()  
 			local args = {[1] = "p2"} game:GetService("ReplicatedStorage").Remote.Event.Skin["[C-S]TryEquipBestSkin"]:FireServer(unpack(args))     
 		end
@@ -156,7 +156,7 @@ Tab:CreateToggle({
 	CurrentValue = false,
 	Callback = function(Value)
 		openegg112 = Value
-         while openegg112 do wait(0.1)
+         while openegg112 do wait(0.3)
 			game:GetService("ReplicatedStorage").Remote.Event.Game["[C-S]PlayerClick"]:FireServer()  
 			local args = {[1] = "p3"} game:GetService("ReplicatedStorage").Remote.Event.Skin["[C-S]TryEquipBestSkin"]:FireServer(unpack(args))     
 		end
@@ -170,7 +170,7 @@ Tab:CreateToggle({
 	CurrentValue = false,
 	Callback = function(Value)
     wins = Value
-            while wins do task.wait(0.1)
+            while wins do task.wait(0.4)
 local args = {[1] = true}game:GetService("ReplicatedStorage").Remote.Event.Game["[C-S]PlayerPKEnd"]:FireServer(unpack(args))		
 		end
 	end,
@@ -386,23 +386,6 @@ Label2 = Tab:CreateLabel(cs2.Value)
 Label3 = Tab:CreateLabel(cs3.Value)
 
 
-
-local ggf = client.PlayerGui.Main.OnlineRewards.Frame
-Tab:CreateSection("Auto Claim Gifts")
-Tab:CreateToggle({
-	Name = "Auto Collect Gifts (Only Potion)",
-	CurrentValue = false,
-	Callback = function(Value)
-    collectgifts = Value
-            while collectgifts do task.wait(0.3)
-firesignal(ggf.Inv["6"].CLAIM.Button.Activated)
-firesignal(ggf.Inv["9"].CLAIM.Button.Activated)
-firesignal(ggf.Inv["12"].CLAIM.Button.Activated)
-		end
-	end,
-})
-
-
 --[[Tab:CreateButton({
 	Name = "Copy CFrame",
 	CurrentValue = false,
@@ -465,7 +448,7 @@ game:GetService("ReplicatedStorage").Remote.Event.World["[C-S]ChangeWorld"]:Fire
   end  
 })
  Tab2:CreateButton({
-  Name = "World 2 (Rainbo Machine)",
+  Name = "World 2 (Rainbow Machine)",
   Callback = function()
 local args = {
     [1] = 2
@@ -501,14 +484,12 @@ Tab2:CreateButton({
   Name = "World 5",
   Callback = function()
 local args = {
-    [1] = 5
+    [1] = workspace.Check.ToWorld5
 }
 
-game:GetService("ReplicatedStorage").Remote.Event.World["[C-S]ChangeWorld"]:FireServer(unpack(args))
+game:GetService("ReplicatedStorage").Remote.Event.Game["[C-S]PlayerTP"]:FireServer(unpack(args))  
   end  
 }) 
-
-icon = 11323675703
 
 local Tab5 = Window:CreateTab("Auto Open",9194077649)
 Tab5:CreateSection("Opener")
@@ -524,7 +505,33 @@ game:GetService("ReplicatedStorage").Remote.Event.Pet["[C-S]TryCraftAll"]:FireSe
 	end,
 })
 
+Tab5:CreateToggle({
+	Name = "Auto Open Event Egg",
+	CurrentValue = false,
+	Callback = function(Value)
+    eventegg = Value
+            while eventegg do task.wait(0.1)
+local args = {
+    [1] = "E700"
+}
 
+game:GetService("ReplicatedStorage").Remote.Event.Events["[C-S]TryGetEventReward"]:FireServer(unpack(args))		
+		end
+	end,
+})
+
+Tab5:CreateToggle({
+	Name = "Hide Egg Animation",
+	CurrentValue = false,
+	Callback = function(Value)
+    hideegg = Value
+            while hideegg do task.wait()
+client.PlayerGui.LuckOpen.Enabled = false
+client.PlayerGui.EggSystem.Enabled = false
+
+		end
+	end,
+})
 
 local eggs ={}
 for _,v in pairs(game:GetService("Workspace").Eggs.Check:GetChildren()) do

@@ -481,30 +481,6 @@ Tab:CreateToggle({
 })
 
 Tab:CreateToggle({
-    Name = "Hide Dungeon Ui (Dont Use)",
-    CurrentValue = false,
-    Callback = function(Value)
-        finshui = Value
-        while finshui do
-client.PlayerGui.DungeonMain.Frame.Visible = false
-client.PlayerGui.MainUi.Enabled = true
-client.PlayerGui.OnScreenButtons.Enabled = true
-        end
-    end,
-})
-
-Tab:CreateToggle({
-    Name = "Hide Dungeon Finish Ui",
-    CurrentValue = false,
-    Callback = function(Value)
-        finshui = Value
-        while finshui do
-client.PlayerGui.DungeonFinishUI.Enabled = false
-        end
-    end,
-})
-
-Tab:CreateToggle({
 	Name = "Auto Collect Dungeon Items",
 	CurrentValue = false,
 	Callback = function(Value)
@@ -1193,18 +1169,6 @@ Tab5:CreateSection("Index Stat")
 
 Lbl2 = Tab5:CreateLabel(index.Text)
 
-  Tab5:CreateToggle({
-  Name = "Auto Update Stat",
-  CurrentValue = false,
-  Callback = function(Value)
-    atup = Value
-    while atup and task.wait(3) do
-firesignal(client.PlayerGui.MainUi.Right.PetsButton.Activated)
-	wait(2)
-firesignal(client.PlayerGui.MainUi.Right.PetsButton.Activated)
-    end
-  end  
-})
 Tab5:CreateSection("Legendary Hatch Stat (Coming Soon)")
 Sat3 = Tab5:CreateLabel(ugcsat.HatchNumber.Text)
 

@@ -1181,6 +1181,19 @@ Tab5:CreateSection("Opener")
     autoHideAnimation = Value
     while autoHideAnimation and task.wait() do
     client.PlayerGui.PetOpenUI.Enabled = false
+      if workspace.Camera:FindFirstChild("EggOpenMap") then
+        workspace.Camera:FindFirstChild("EggOpenMap"):Destroy()
+      end
+    end
+  end  
+})
+  Tab5:CreateToggle({
+  Name = "Hide Egg Animation 2",
+  CurrentValue = false,
+  Callback = function(Value)
+    autoHideAnimation2 = Value
+    while autoHideAnimation2 and task.wait() do
+    client.PlayerGui.PetOpenUI.Enabled = false
 	client.PlayerGui.MainUi.Enabled = true
     client.PlayerGui.OnScreenButtons.Enabled = true
       if workspace.Camera:FindFirstChild("EggOpenMap") then
@@ -1189,7 +1202,6 @@ Tab5:CreateSection("Opener")
     end
   end  
 })
-
 Tab5:CreateToggle({
 	Name = "Auto Equip Best Pet",
 	CurrentValue = false,

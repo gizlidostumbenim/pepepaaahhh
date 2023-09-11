@@ -170,19 +170,19 @@ Tab:CreateToggle({
 	CurrentValue = false,
 	Callback = function(Value)
     wins = Value
-            while wins do task.wait(0.4)
+            while wins do task.wait(0.2)
 local args = {[1] = true}game:GetService("ReplicatedStorage").Remote.Event.Game["[C-S]PlayerPKEnd"]:FireServer(unpack(args))		
 		end
 	end,
 })
 
 Tab:CreateToggle({
-	Name = "Auto Press E (Nearest Fight)",
+	Name = "Hide Screen Message",
 	CurrentValue = false,
 	Callback = function(Value)
-    autofight = Value
-            while autofight do task.wait()
-		caganss()
+    message = Value
+            while message do task.wait()
+		client.PlayerGui.Message.Enabled = false
 		end
 	end,
 })
@@ -213,7 +213,7 @@ Tab:CreateToggle({
 	CurrentValue = false,
 	Callback = function(Value)
     spass = Value
-            while spass do task.wait(1)
+            while spass do task.wait(3)
 local args = {[1] = "Passs1"}game:GetService("ReplicatedStorage").Remote.Event.Mission["[C-S]TryGetReward"]:FireServer(unpack(args))
 local args = {[1] = "Passs2"}game:GetService("ReplicatedStorage").Remote.Event.Mission["[C-S]TryGetReward"]:FireServer(unpack(args))
 local args = {[1] = "Passs3"}game:GetService("ReplicatedStorage").Remote.Event.Mission["[C-S]TryGetReward"]:FireServer(unpack(args))
@@ -245,7 +245,7 @@ Tab:CreateToggle({
 	CurrentValue = false,
 	Callback = function(Value)
     attacking = Value
-            while attacking do task.wait(0.2)
+            while attacking do task.wait(0.3)
     autoattack()
 		end
 	end,

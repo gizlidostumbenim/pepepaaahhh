@@ -56,7 +56,7 @@ local function TweenTo(cf, dur)
     return tween
 end
 
-
+setclipboard("discord.gg/RVnjYRWNA9")
 local Window = Rayfield:CreateWindow({
 	Name = name,
 	LoadingTitle = "Perfectus Hub",
@@ -71,17 +71,16 @@ local Window = Rayfield:CreateWindow({
         	Invite = "RVnjYRWNA9", 
         	RememberJoins = true
         },
-      KeySystem = false, -- Set this to true to use our key system
+      KeySystem = true, -- Set this to true to use our key system
       KeySettings = {
-      Title = "Oxygen Hub",
+      Title = "Perfectus Hub",
       Subtitle = "Key System",
-      Note = "Join the discord (discord.gg/RVnjYRWNA9)",
+      Note = "Copied The Discord Invite",
       FileName = "Key",
       SaveKey = true,
       GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-      Key = "FUCKME"
+      Key = "racist10"
    }
-
 })
 
 local Tab = Window:CreateTab("Main", 7539983773)
@@ -101,15 +100,7 @@ Rayfield:Notify({
 },
 })
 Tab:CreateSection("Discord")
-Tab:CreateLabel("Join My Discord")
 Tab:CreateLabel("discord.gg/RVnjYRWNA9")
-
-Tab:CreateButton({
-	Name = "Copy Invite",
-	Callback = function()
-   setclipboard("discord.gg/RVnjYRWNA9")
-	end,
-})
 
 
 function caganss()
@@ -410,18 +401,27 @@ Tab:CreateToggle({
 })
 
 
-local S11 = Tab:CreateSection("Dungeon")
+Tab:CreateSection("Dungeon Timer")
 
 local cs = game:GetService("Workspace").TouchHexagons.DungeonHexagon.DungeonStartUI.HitboxPart.FloatingText.BillboardGui.Frame.OpensIn
 Label11 = Tab:CreateLabel(cs.Text)
 
+Tab:CreateSection("Bolts, Copper, Screws")
 
+local bcs = client.PlayerGui.MainUi.Right
+bolts = Tab:CreateLabel(bcs.Bolts.TextLabel.Text)
+copper = Tab:CreateLabel(bcs.Copper.TextLabel.Text)
+screws = Tab:CreateLabel(bcs.Screws.TextLabel.Text)
+
+
+
+Tab:CreateSection("Dungeon Farm")
 local delay2
 	Tab:CreateSlider({
 		Name = "Auto Start Dungeon Delay ( /s )",
 		Range = {
 			1,
-			600
+			60
 		},
 		Increment = 1,
 		Suffix = "/s",
@@ -481,6 +481,7 @@ local dungeon = Tab:CreateToggle({
         b = Value
         while b do
             firesignal(client.PlayerGui.FightingMainUi.ClickButton.Activated)
+            client.PlayerGui.CentreMessage.Enabled = false
 			task.wait()
             repeat
                 task.wait()
@@ -506,7 +507,16 @@ dungeon:Set(true)
 		end
 	end,
 })
-
+Tab:CreateToggle({
+	Name = "Show Main UI",
+	CurrentValue = false,
+	Callback = function(Value)
+    sssclas = Value
+            while sssclas do task.wait(0.1)
+client.PlayerGui.MainUi.Enabled = true
+		end
+	end,
+})
 Tab:CreateToggle({
 	Name = "Auto Collect Dungeon Items",
 	CurrentValue = false,
@@ -777,7 +787,16 @@ Tab:CreateToggle({
         end
 	end,
 })
-
+Tab:CreateToggle({
+	Name = "Hide Craft Effect, Image",
+	CurrentValue = false,
+	Callback = function(Value)
+	craftimg = Value
+    while craftimg do wait()
+client.PlayerGui.EquipmentPickup.Enabled = false
+        end
+	end,
+})
 
 
 
@@ -1099,7 +1118,6 @@ Tab3:CreateButton({
 	a.GoldenPet.Enabled = false
 	a.RainbowPet.Enabled = false
 	a.PowerCoreUi.Enabled = false
-	a.SummerQuestBACKUP.Enabled = false
 	a.MergeEquipment.Enabled = false
 	a.EquipmentShop.Enabled = false
 	a.GloveShop.Enabled = false
@@ -1158,14 +1176,6 @@ Tab3:CreateButton({
 	end,
 })
 Tab3:CreateButton({
-	Name = "Open Summer Quest",
-	Callback = function()
-	a.SummerQuestBACKUP.Enabled = true
-	a.SummerQuestBACKUP.Frame.Active = true	
-	a.SummerQuestBACKUP.Frame.Visible = true
-	end,
-})
-Tab3:CreateButton({
 	Name = "Open Merge Equipment",
 	Callback = function()
 	a.MergeEquipment.Enabled = true
@@ -1196,8 +1206,8 @@ Tab5:CreateSection("Index Stat")
 
 Lbl2 = Tab5:CreateLabel(index.Text)
 
-Tab5:CreateSection("Legendary Hatch Stat (Coming Soon)")
-Sat3 = Tab5:CreateLabel(ugcsat.HatchNumber.Text)
+--Tab5:CreateSection("Legendary Hatch Stat (Coming Soon)")
+--Sat3 = Tab5:CreateLabel(ugcsat.HatchNumber.Text)
 
 Tab5:CreateSection("Opener")
 
@@ -1229,6 +1239,7 @@ Tab5:CreateSection("Opener")
     end
   end  
 })
+
 Tab5:CreateToggle({
 	Name = "Auto Equip Best Pet",
 	CurrentValue = false,
@@ -1247,9 +1258,9 @@ for _,v in pairs(game:GetService("Workspace").EggVendors:GetChildren()) do
     table.insert(eggs,v.Name)
 end
 
-local eggtoopen = "iagree"
+local eggtoopen
 Tab5:CreateDropdown({
-	Name = "Select to World",
+	Name = "Select to Egg (World)",
 	Options = eggs,
 	CurrentOption = "",
 	Callback = function(Option)
@@ -1260,7 +1271,7 @@ Tab5:CreateDropdown({
 
 local openegg
 Tab5:CreateToggle({
-	Name = "Open Egg World",
+	Name = "Open Selected Egg Single",
 	CurrentValue = false,
 	Callback = function(Value)
 		openegg = Value
@@ -1271,9 +1282,19 @@ Tab5:CreateToggle({
         end
 	end,
 })
-
-
-
+local openegg2
+Tab5:CreateToggle({
+	Name = "Open Selected Egg Triple",
+	CurrentValue = false,
+	Callback = function(Value)
+		openegg2 = Value
+        if Value then
+            spawn(function()
+                openegg_func2()
+            end)
+        end
+	end,
+})
 
 function openegg_func()
     spawn(function()
@@ -1284,7 +1305,15 @@ game:GetService("ReplicatedStorage").Events.PlayerPressedKeyOnEgg:FireServer(unp
         end
     end)
 end
-
+function openegg_func2()
+    spawn(function()
+        while wait(0.1) and openegg2 do
+local args = 
+   eggtoopen
+game:GetService("ReplicatedStorage").Events.ThreeEggOpenOwned:FireServer(unpack(args))
+        end
+    end)
+end
 
 local Universal = Window:CreateTab("Universal",10885655986)
 Universal:CreateSection("Misc")
@@ -2309,6 +2338,9 @@ local Tabss = Window:CreateTab(name2,11323675691)
 
 local Labelaa = Tabss:CreateSection("Perfectus Hub Updates")
 
+Tabss:CreateParagraph({Title = "Update 5.1", Content = "New Toggle, Bug Fixed"})
+
+
 Tabss:CreateParagraph({Title = "Update 5", Content = "Updated, Bug Fixed"})
 
 
@@ -2340,7 +2372,9 @@ Lbl2:Set(index.Text)
 Stats1:Set(pstats.Damage.TextLabel.Text)
 Stats2:Set(pstats.Coins.TextLabel.Text)
 Stats3:Set(pstats.Gems.TextLabel.Text)
+bolts:Set(bcs.Bolts.TextLabel.Text)
+copper:Set(bcs.Copper.TextLabel.Text)
+screws:Set(bcs.Screws.TextLabel.Text)
 end
-
 
 Rayfield:LoadConfiguration()

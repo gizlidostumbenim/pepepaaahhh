@@ -19,7 +19,7 @@ getgenv().esp_loaded = false
 getgenv().Visibility = false
 local VirtualInputManager = game:GetService("VirtualInputManager")
 local Player = game:GetService("Players").LocalPlayer or game:GetService("Players").PlayerAdded:Wait()
-local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local function Click(v)
 	VirtualInputManager:SendMouseButtonEvent(v.AbsolutePosition.X+v.AbsoluteSize.X/2,v.AbsolutePosition.Y+50,0,true,v,1)
@@ -55,6 +55,8 @@ local function TweenTo(cf, dur)
 
     return tween
 end
+
+getgenv().SecureMode = true
 
 setclipboard("discord.gg/RVnjYRWNA9")
 local Window = Rayfield:CreateWindow({
@@ -184,38 +186,6 @@ end
 	Callback = function()
 firesignal(client.PlayerGui.FightingMainUi.StopAutoFightButton.Activated)
    end,
-})
-
-local pstats = client.PlayerGui.MainUi.Top
-
-Tab:CreateSection("Damage, Win, Gem Stats")
-Stats1 = Tab:CreateLabel(pstats.Damage.TextLabel.Text)
-Stats2 = Tab:CreateLabel(pstats.Coins.TextLabel.Text)
-Stats3 = Tab:CreateLabel(pstats.Gems.TextLabel.Text)
-
-
-local ugcstat = client.PlayerGui.UGCTasks.Frame.ScrollingFrame
-
-Tab:CreateSection("UGC Left Stat")
-
-Stat1 = Tab:CreateLabel(ugcstat["1"].Bar.TextLabel.Text)
-Stat2 = Tab:CreateLabel(ugcstat["2"].Bar.TextLabel.Text)
-Stat3 = Tab:CreateLabel(ugcstat["3"].Bar.TextLabel.Text)
-Stat4 = Tab:CreateLabel(ugcstat["4"].Bar.TextLabel.Text)
-
-local ugcsat = client.PlayerGui.AxolotlQuest.Frame
-
-  Tab:CreateToggle({
-  Name = "Auto Update Stats",
-  CurrentValue = false,
-  Callback = function(Value)
-    autoup = Value
-    while autoup and task.wait(10) do
-firesignal(client.PlayerGui.MainUi.UGCTasks.Activated)
-wait(0.5)
-firesignal(client.PlayerGui.MainUi.UGCTasks.Activated)
-	end
-  end  
 })
 
 
@@ -401,158 +371,7 @@ Tab:CreateToggle({
 })
 
 
-Tab:CreateSection("Dungeon Timer")
 
-local cs = game:GetService("Workspace").TouchHexagons.DungeonHexagon.DungeonStartUI.HitboxPart.FloatingText.BillboardGui.Frame.OpensIn
-Label11 = Tab:CreateLabel(cs.Text)
-
-Tab:CreateSection("Bolts, Copper, Screws")
-
-local bcs = client.PlayerGui.MainUi.Right
-bolts = Tab:CreateLabel(bcs.Bolts.TextLabel.Text)
-copper = Tab:CreateLabel(bcs.Copper.TextLabel.Text)
-screws = Tab:CreateLabel(bcs.Screws.TextLabel.Text)
-
-
-
-Tab:CreateSection("Dungeon Farm")
-local delay2
-	Tab:CreateSlider({
-		Name = "Auto Start Dungeon Delay ( /s )",
-		Range = {
-			1,
-			60
-		},
-		Increment = 1,
-		Suffix = "/s",
-		CurrentValue = 1,
-		Callback = function(value)
-        delay2 = value
-		end
-	})
-
-Tab:CreateToggle({
-    Name = "Auto Start Dungeon",
-    CurrentValue = false,
-    Callback = function(Value)
-        stdun = Value
-        while stdun do wait(delay2)
-			local args = {[1] = "StartDungeon",}game:GetService("ReplicatedStorage").Events.DungeonEvent:FireServer(unpack(args))
-        end
-    end,
-})
-local delay3
-	Tab:CreateSlider({
-		Name = "Auto Farm Dungeon Toggle Reset Delay ( /s )",
-		Range = {
-			1,
-			15
-		},
-		Increment = 1,
-		Suffix = "/s",
-		CurrentValue = 1,
-		Callback = function(value)
-        delay3 = value
-		end
-	})
-
-local function getClosestMob()
-    local dist, thing = math.huge
-    for i, v in next, game:GetService("Workspace").BreakableParts.Dungeon:GetDescendants() do
-        if v.Name == "Head" then
-            local mag = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
-            if mag < dist then
-                dist = mag
-                thing = v
-            end
-        end
-    end
-    if thing then
-        return thing
-    else
-        return nil
-    end
-end
-
-local dungeon = Tab:CreateToggle({
-    Name = "Auto Farm Dungeon",
-    CurrentValue = false,
-    Callback = function(Value)
-        b = Value
-        while b do
-            firesignal(client.PlayerGui.FightingMainUi.ClickButton.Activated)
-            client.PlayerGui.CentreMessage.Enabled = false
-			task.wait()
-            repeat
-                task.wait()
-            until game.Players.LocalPlayer.Character ~= nil
-            local mob = getClosestMob()
-            if mob then
-                local tweenInfo = TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
-                local tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, {CFrame = mob.CFrame * CFrame.new(0,0,4)})
-                tween:Play()
-            end
-        end
-    end,
-})
-
-Tab:CreateToggle({
-	Name = "Auto Farm Dungeon Toggle Reset",
-	CurrentValue = false,
-	Callback = function(Value)
-    dungeonreset = Value
-            while dungeonreset do task.wait(delay3)
-dungeon:Set(false)
-dungeon:Set(true)
-		end
-	end,
-})
-Tab:CreateToggle({
-	Name = "Show Main UI",
-	CurrentValue = false,
-	Callback = function(Value)
-    sssclas = Value
-            while sssclas do task.wait(0.1)
-client.PlayerGui.MainUi.Enabled = true
-		end
-	end,
-})
-Tab:CreateToggle({
-	Name = "Auto Collect Dungeon Items",
-	CurrentValue = false,
-	Callback = function(Value)
-    attackingsds = Value
-            while attackingsds do task.wait()
-
-local args = {
-    [1] = "Gems",
-    [2] = 1,
-}
-
-game:GetService("ReplicatedStorage").CollectedCurrency:FireServer(unpack(args))
-local args = {
-    [1] = "Screws",
-    [2] = 1,
-}
-
-game:GetService("ReplicatedStorage").CollectedCurrency:FireServer(unpack(args))
-
-local args = {
-    [1] = "Copper",
-    [2] = 1,
-}
-
-game:GetService("ReplicatedStorage").CollectedCurrency:FireServer(unpack(args))
-local args = {
-    [1] = "Bolts",
-    [2] = 1,
-}
-
-game:GetService("ReplicatedStorage").CollectedCurrency:FireServer(unpack(args))
-
-		end
-	end,
-})
 local S11s = Tab:CreateSection("Hacker")
 Tab:CreateToggle({
 	Name = "Auto Hacker Every 30 min",
@@ -601,29 +420,41 @@ function getNil(name,class) for _,v in pairs(getnilinstances())do if v.ClassName
 })
 
 local ggf = client.PlayerGui.PlaytimeRewards.Frame.Frame
-Tab:CreateSection("Auto Claim Gifts")
+Tab:CreateSection("Gifts, Spin")
+
 Tab:CreateToggle({
-	Name = "Auto Collect Gifts",
+	Name = "Auto Claim Gifts",
 	CurrentValue = false,
 	Callback = function(Value)
     collectgifts = Value
-            while collectgifts do task.wait(0.3)
-firesignal(ggf.Gift1.Activated)
-firesignal(ggf.Gift2.Activated)
-firesignal(ggf.Gift3.Activated)
-firesignal(ggf.Gift4.Activated)
-firesignal(ggf.Gift5.Activated)
-firesignal(ggf.Gift6.Activated)
-firesignal(ggf.Gift7.Activated)
-firesignal(ggf.Gift8.Activated)
-firesignal(ggf.Gift9.Activated)
-firesignal(ggf.Gift10.Activated)
-firesignal(ggf.Gift11.Activated)
-firesignal(ggf.Gift12.Activated)
+            while collectgifts do task.wait(1)
+local args = {[1] = 1}game:GetService("ReplicatedStorage").Events.PlaytimeRewardUpdateEvent:FireServer(unpack(args))
+local args = {[1] = 2}game:GetService("ReplicatedStorage").Events.PlaytimeRewardUpdateEvent:FireServer(unpack(args))
+local args = {[1] = 3}game:GetService("ReplicatedStorage").Events.PlaytimeRewardUpdateEvent:FireServer(unpack(args))
+local args = {[1] = 4}game:GetService("ReplicatedStorage").Events.PlaytimeRewardUpdateEvent:FireServer(unpack(args))
+local args = {[1] = 5}game:GetService("ReplicatedStorage").Events.PlaytimeRewardUpdateEvent:FireServer(unpack(args))
+local args = {[1] = 6}game:GetService("ReplicatedStorage").Events.PlaytimeRewardUpdateEvent:FireServer(unpack(args))
+local args = {[1] = 7}game:GetService("ReplicatedStorage").Events.PlaytimeRewardUpdateEvent:FireServer(unpack(args))
+local args = {[1] = 8}game:GetService("ReplicatedStorage").Events.PlaytimeRewardUpdateEvent:FireServer(unpack(args))
+local args = {[1] = 9}game:GetService("ReplicatedStorage").Events.PlaytimeRewardUpdateEvent:FireServer(unpack(args))
+local args = {[1] = 10}game:GetService("ReplicatedStorage").Events.PlaytimeRewardUpdateEvent:FireServer(unpack(args))
+local args = {[1] = 11}game:GetService("ReplicatedStorage").Events.PlaytimeRewardUpdateEvent:FireServer(unpack(args))
+local args = {[1] = 12}game:GetService("ReplicatedStorage").Events.PlaytimeRewardUpdateEvent:FireServer(unpack(args))
 		end
 	end,
 })
 
+Tab:CreateToggle({
+	Name = "Auto Spin",
+	CurrentValue = false,
+	Callback = function(Value)
+    spin = Value
+            while spin do task.wait(0.5)
+  local args = {[1] = "Spin"}game:GetService("ReplicatedStorage").Events.SpinWheelEvent:FireServer(unpack(args))
+  local args = {[1] = "SpinComplete"}game:GetService("ReplicatedStorage").Events.SpinWheelEvent:FireServer(unpack(args))
+		end
+	end,
+})
 
 --[[Tab:CreateButton({
 	Name = "Copy CFrame",
@@ -950,7 +781,256 @@ game:GetService("ReplicatedStorage").Events.GemStoreEvent:InvokeServer(unpack(ar
 })	
 
 
-local Tab2 = Window:CreateTab("Teleport",11514102342)
+
+
+local Tab44 = Window:CreateTab("Dungeon", 6730262023)
+
+Tab44:CreateSection("Dungeon Timer")
+
+local cs = game:GetService("Workspace").TouchHexagons.DungeonHexagon.DungeonStartUI.HitboxPart.FloatingText.BillboardGui.Frame.OpensIn
+Label11 = Tab44:CreateLabel(cs.Text)
+
+Tab44:CreateSection("Bolts, Copper, Screws")
+
+local bcs = client.PlayerGui.MainUi.Right
+bolts = Tab44:CreateLabel(bcs.Bolts.TextLabel.Text)
+copper = Tab44:CreateLabel(bcs.Copper.TextLabel.Text)
+screws = Tab44:CreateLabel(bcs.Screws.TextLabel.Text)
+
+
+
+
+Tab44:CreateSection("Dungeon Farm")
+
+
+
+local delay2
+	Tab44:CreateSlider({
+		Name = "Auto Start Dungeon Delay ( /s )",
+		Range = {
+			1,
+			60
+		},
+		Increment = 1,
+		Suffix = "/s",
+		CurrentValue = 1,
+		Callback = function(value)
+        delay2 = value
+		end
+	})
+
+
+
+Tab44:CreateToggle({
+    Name = "Auto Start Dungeon",
+    CurrentValue = false,
+    Callback = function(Value)
+        stdun = Value
+        while stdun do wait(delay2)
+			local args = {[1] = "StartDungeon",}game:GetService("ReplicatedStorage").Events.DungeonEvent:FireServer(unpack(args))
+        end
+    end,
+})
+
+
+
+local delay3
+	Tab44:CreateSlider({
+		Name = "Auto Mob Toggle Reset Delay ( /s )",
+		Range = {
+			1,
+			15
+		},
+		Increment = 1,
+		Suffix = "/s",
+		CurrentValue = 1,
+		Callback = function(value)
+        delay3 = value
+		end
+	})
+
+
+
+local function getClosestMob()
+    local dist, thing = math.huge
+    for i, v in next, game:GetService("Workspace").BreakableParts.Dungeon:GetDescendants() do
+        if v.Name == "Head" then
+            local mag = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
+            if mag < dist then
+                dist = mag
+                thing = v
+            end
+        end
+    end
+    if thing then
+        return thing
+    else
+        return nil
+    end
+end
+
+
+
+local dungeon = Tab44:CreateToggle({
+    Name = "Auto Mob Dungeon",
+    CurrentValue = false,
+    Callback = function(Value)
+        b = Value
+        while b do
+            firesignal(client.PlayerGui.FightingMainUi.ClickButton.Activated)
+            client.PlayerGui.CentreMessage.Enabled = false
+			task.wait()
+            repeat
+                task.wait()
+            until game.Players.LocalPlayer.Character ~= nil
+            local mob = getClosestMob()
+            if mob then
+                local tweenInfo = TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+                local tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, tweenInfo, {CFrame = mob.CFrame * CFrame.new(0,0,4)})
+                tween:Play()
+            end
+        end
+    end,
+})
+
+
+
+Tab44:CreateToggle({
+	Name = "Auto Mob Dungeon Toggle Reset",
+	CurrentValue = false,
+	Callback = function(Value)
+    dungeonreset = Value
+            while dungeonreset do task.wait(delay3)
+dungeon:Set(false)
+wait(0.1)
+dungeon:Set(true)
+		end
+	end,
+})
+
+Tab44:CreateSection("Auto Exit")
+local delay4
+	Tab44:CreateSlider({
+		Name = "Auto Exit Delay ( /s )",
+		Range = {
+			5,
+			420
+		},
+		Increment = 5,
+		Suffix = "/s",
+		CurrentValue = 5,
+		Callback = function(value)
+        delay4 = value
+		end
+	})
+	
+Tab44:CreateToggle({
+	Name = "Auto Exit Dungeon",
+	CurrentValue = false,
+	Callback = function(Value)
+    autexit = Value
+            while autexit do task.wait(delay4)
+firesignal(client.PlayerGui.DungeonMain.Frame.Exit.Activated)
+		end
+	end,
+})
+
+local claimd = client.PlayerGui.DungeonFinishUI
+local claimds = client.PlayerGui.DungeonFinishUI.Frame.ClaimButton
+
+Tab44:CreateSection("Dungeon 2")
+
+Tab44:CreateToggle({
+	Name = "Dungeon Finish Hide",
+	CurrentValue = false,
+	Callback = function(Value)
+    sssclas = Value
+            while sssclas do task.wait(0.1)
+claimd.Enabled = false
+		end
+	end,
+})
+
+Tab44:CreateToggle({
+	Name = "Auto Collect Dungeon Items",
+	CurrentValue = false,
+	Callback = function(Value)
+    attackingsds = Value
+            while attackingsds do task.wait()
+
+local args = {
+    [1] = "Gems",
+    [2] = 1,
+}
+
+game:GetService("ReplicatedStorage").CollectedCurrency:FireServer(unpack(args))
+local args = {
+    [1] = "Screws",
+    [2] = 1,
+}
+
+game:GetService("ReplicatedStorage").CollectedCurrency:FireServer(unpack(args))
+
+local args = {
+    [1] = "Copper",
+    [2] = 1,
+}
+
+game:GetService("ReplicatedStorage").CollectedCurrency:FireServer(unpack(args))
+local args = {
+    [1] = "Bolts",
+    [2] = 1,
+}
+
+game:GetService("ReplicatedStorage").CollectedCurrency:FireServer(unpack(args))
+
+		end
+	end,
+})
+
+local Tab8 = Window:CreateTab("Stats", 14377123173)
+
+local pstats = client.PlayerGui.MainUi.Top
+
+Tab8:CreateSection("Damage, Win, Gem Stats")
+
+Stats1 = Tab8:CreateLabel(pstats.Damage.TextLabel.Text)
+
+Stats2 = Tab8:CreateLabel(pstats.Coins.TextLabel.Text)
+
+Stats3 = Tab8:CreateLabel(pstats.Gems.TextLabel.Text)
+
+
+local ugcstat = client.PlayerGui.UGCTasks.Frame.ScrollingFrame
+
+Tab8:CreateSection("UGC Left Stat")
+
+Stat1 = Tab8:CreateLabel(ugcstat["1"].Bar.TextLabel.Text)
+
+Stat2 = Tab8:CreateLabel(ugcstat["2"].Bar.TextLabel.Text)
+
+Stat3 = Tab8:CreateLabel(ugcstat["3"].Bar.TextLabel.Text)
+
+Stat4 = Tab8:CreateLabel(ugcstat["4"].Bar.TextLabel.Text)
+
+local ugcsat = client.PlayerGui.AxolotlQuest.Frame
+
+  Tab8:CreateToggle({
+  Name = "Auto Update Stats",
+  CurrentValue = false,
+  Callback = function(Value)
+    autoup = Value
+    while autoup and task.wait() do
+firesignal(client.PlayerGui.MainUi.UGCTasks.Activated)
+wait(0.5)
+firesignal(client.PlayerGui.MainUi.UGCTasks.Activated)
+wait(10)
+	end
+  end  
+})
+
+local Tab2 = Window:CreateTab("Teleport",6723742952)
+
 Tab2:CreateSection("Machine Teleport")
 
    Tab2:CreateButton({
@@ -989,104 +1069,133 @@ Tab2:CreateSection("World")
 local args = {[1] = "Teleport",[2] = 1,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
 })
+
  Tab2:CreateButton({
   Name = "World 2 (Dungeon)",
   Callback = function()
 local args = {[1] = "Teleport",[2] = 2,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
-}) Tab2:CreateButton({
+}) 
+
+Tab2:CreateButton({
   Name = "World 3 (Rainbow Machine, Merge Equipment)",
   Callback = function()
 local args = {[1] = "Teleport",[2] = 3,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
-}) Tab2:CreateButton({
+}) 
+
+Tab2:CreateButton({
   Name = "World 4 (Powercore, Perks)",
   Callback = function()
 local args = {[1] = "Teleport",[2] = 4,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
-}) Tab2:CreateButton({
+}) 
+
+Tab2:CreateButton({
   Name = "World 5 (Wishing Well)",
   Callback = function()
 local args = {[1] = "Teleport",[2] = 5,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
-}) Tab2:CreateButton({
+})
+
+Tab2:CreateButton({
   Name = "World 6 (Equipment Shop, Dungeon)",
   Callback = function()
 local args = {[1] = "Teleport",[2] = 6,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
-}) Tab2:CreateButton({
+}) 
+
+Tab2:CreateButton({
   Name = "World 7 (Hacker Station)",
   Callback = function()
 local args = {[1] = "Teleport",[2] = 7,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
-}) Tab2:CreateButton({
+})
+
+Tab2:CreateButton({
   Name = "World 8 (Miner)",
   Callback = function()
 local args = {[1] = "Teleport",[2] = 8,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
-}) Tab2:CreateButton({
+}) 
+
+Tab2:CreateButton({
   Name = "World 9",
   Callback = function()
 local args = {[1] = "Teleport",[2] = 9,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
-}) Tab2:CreateButton({
+}) 
+
+Tab2:CreateButton({
   Name = "World 10 (Dungeon)",
   Callback = function()
 local args = {[1] = "Teleport",[2] = 10,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
-}) Tab2:CreateButton({
+}) 
+
+Tab2:CreateButton({
   Name = "World 11",
   Callback = function()
 local args = {[1] = "Teleport",[2] = 11,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
-}) Tab2:CreateButton({
+})
+
+Tab2:CreateButton({
   Name = "World 12",
   Callback = function()
 local args = {[1] = "Teleport",[2] = 12,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
 })
+
 Tab2:CreateButton({
   Name = "World 13",
   Callback = function()
 local args = {[1] = "Teleport",[2] = 13,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
 })
+
 Tab2:CreateButton({
   Name = "World 14",
   Callback = function()
 local args = {[1] = "Teleport",[2] = 14,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
 })
+
 Tab2:CreateButton({
   Name = "World 15",
   Callback = function()
 local args = {[1] = "Teleport",[2] = 15,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
 })
+
 Tab2:CreateButton({
   Name = "World 16",
   Callback = function()
 local args = {[1] = "Teleport",[2] = 16,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
 })
+
 Tab2:CreateButton({
   Name = "World 17",
   Callback = function()
 local args = {[1] = "Teleport",[2] = 17,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
 })
+
 Tab2:CreateButton({
   Name = "World 18",
   Callback = function()
 local args = {[1] = "Teleport",[2] = 18,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
 })
+
 Tab2:CreateButton({
   Name = "World 19",
   Callback = function()
 local args = {[1] = "Teleport",[2] = 19,}game:GetService("ReplicatedStorage").Events.TeleportEvent:InvokeServer(unpack(args))
   end  
 })
+
 Tab2:CreateButton({
   Name = "World 20",
   Callback = function()
@@ -1096,9 +1205,9 @@ local args = {[1] = "Teleport",[2] = 20,}game:GetService("ReplicatedStorage").Ev
 
 
 
-local Tab3 = Window:CreateTab("GUI (Fixed)", 10825028227)
+local Tab3 = Window:CreateTab("GUI (Fixed)", 4458888115)
 
-Tab3:CreateSection("Select Frame")
+Tab3:CreateSection("Fix")
 
 local a = game.Players.LocalPlayer.PlayerGui
 Tab3:CreateButton({
@@ -1112,6 +1221,7 @@ Tab3:CreateButton({
 
 	end,
 })
+Tab3:CreateSection("Close")
 Tab3:CreateButton({
 	Name = "Close All Gui",
 	Callback = function()
@@ -1126,7 +1236,7 @@ Tab3:CreateButton({
 	end,
 })
 
-
+Tab3:CreateSection("Open")
 Tab3:CreateButton({
 	Name = "Open Gloves Shop (if you open the gloves shop once, it will work)",
 	Callback = function()
@@ -1209,7 +1319,7 @@ Lbl2 = Tab5:CreateLabel(index.Text)
 --Tab5:CreateSection("Legendary Hatch Stat (Coming Soon)")
 --Sat3 = Tab5:CreateLabel(ugcsat.HatchNumber.Text)
 
-Tab5:CreateSection("Opener")
+Tab5:CreateSection("Animation")
 
   Tab5:CreateToggle({
   Name = "Hide Egg Animation",
@@ -1239,7 +1349,7 @@ Tab5:CreateSection("Opener")
     end
   end  
 })
-
+Tab5:CreateSection("Pet")
 Tab5:CreateToggle({
 	Name = "Auto Equip Best Pet",
 	CurrentValue = false,
@@ -1258,6 +1368,7 @@ for _,v in pairs(game:GetService("Workspace").EggVendors:GetChildren()) do
     table.insert(eggs,v.Name)
 end
 
+Tab5:CreateSection("Egg")
 local eggtoopen
 Tab5:CreateDropdown({
 	Name = "Select to Egg (World)",
@@ -1315,7 +1426,20 @@ game:GetService("ReplicatedStorage").Events.ThreeEggOpenOwned:FireServer(unpack(
     end)
 end
 
+Rayfield:LoadConfiguration()
+
 local Universal = Window:CreateTab("Universal",10885655986)
+
+Universal:CreateSection("Start Admin")
+
+   Universal:CreateButton({
+   Name = "Admin",
+   Callback = function()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/PerfectusMim/dbevo/main/admin"))()
+   end,
+})
+
+
 Universal:CreateSection("Misc")
 
 local Button = Universal:CreateButton({
@@ -2334,9 +2458,12 @@ Universal:CreateButton({
 })
 
 
-local Tabss = Window:CreateTab(name2,11323675691)
+local Tabss = Window:CreateTab(name2,14198073343)
 
 local Labelaa = Tabss:CreateSection("Perfectus Hub Updates")
+
+Tabss:CreateParagraph({Title = "Update 5.2", Content = "New Toggle, New Tab, Bug Fixed"})
+
 
 Tabss:CreateParagraph({Title = "Update 5.1", Content = "New Toggle, Bug Fixed"})
 
@@ -2376,5 +2503,3 @@ bolts:Set(bcs.Bolts.TextLabel.Text)
 copper:Set(bcs.Copper.TextLabel.Text)
 screws:Set(bcs.Screws.TextLabel.Text)
 end
-
-Rayfield:LoadConfiguration()

@@ -143,17 +143,7 @@ firesignal(client.PlayerGui.MainGui.HUD.BottomButtons.Clicker.Activated)
 		end
 	end,
 })
-Tab:CreateToggle({
-	Name = "Auto Use Ability",
-	SectionParent = One,
-	CurrentValue = false,
-	Callback = function(Value)
-        abilty = Value
-            while abilty do task.wait()
-firesignal(client.PlayerGui.MainGui.HUD.BottomButtons.AbilityButton.Activated)
-		end
-	end,
-})
+
 --Toggle
 Tab:CreateToggle({
 	Name = "Auto Catch Spirit",
@@ -197,7 +187,7 @@ for _,v in pairs(game:GetService("ReplicatedStorage").ReplicatedAssets.Orbs:GetC
     table.insert(eggs,v.Name)
 end
 
-local opens = {"1","2","3","4","5","6","7","8","9","10"}
+--local opens = {"1","2","3","4","5","6","7","8","9","10"}
 
 
 local eggtoopen
@@ -211,20 +201,9 @@ Tab5:CreateDropdown({
 	end,
 })
 
-local opensselect
-Tab5:CreateDropdown({
-	Name = "Multiple Opens",
-	SectionParent = Two,
-	Options = opens,
-	CurrentOption = "",
-	Callback = function(Option)
-        opensselect = Option
-	end,
-})
-
 local openegg
 Tab5:CreateToggle({
-	Name = "Open Egg World",
+	Name = "Selected Open Egg",
 	SectionParent = Two,
 	CurrentValue = false,
 	Callback = function(Value)
@@ -237,7 +216,35 @@ Tab5:CreateToggle({
 	end,
 })
 
+local openegg2
+Tab5:CreateToggle({
+	Name = "Selected Open Egg Double",
+	SectionParent = Two,
+	CurrentValue = false,
+	Callback = function(Value)
+		openegg2 = Value
+        if Value then
+            spawn(function()
+                openegg_func2()
+            end)
+          end
+	end,
+})
 
+local openegg3
+Tab5:CreateToggle({
+	Name = "Selected Open Egg Triple",
+	SectionParent = Two,
+	CurrentValue = false,
+	Callback = function(Value)
+		openegg3 = Value
+        if Value then
+            spawn(function()
+                openegg_func3()
+            end)
+          end
+	end,
+})
 
 
 function openegg_func()
@@ -245,14 +252,37 @@ function openegg_func()
         while wait(0.3) and openegg do
 local args = {
     [1] = eggtoopen,
-    [2] = opensselect
+    [2] = 1
 }
 
 game:GetService("ReplicatedStorage").Remote.Orbs.OpenOrbs:FireServer(unpack(args))
         end
     end)
 end
+function openegg_func2()
+    spawn(function()
+        while wait(0.3) and openegg2 do
+local args = {
+    [1] = eggtoopen,
+    [2] = 2
+}
 
+game:GetService("ReplicatedStorage").Remote.Orbs.OpenOrbs:FireServer(unpack(args))
+        end
+    end)
+end
+function openegg_func3()
+    spawn(function()
+        while wait(0.3) and openegg3 do
+local args = {
+    [1] = eggtoopen,
+    [2] = 3
+}
+
+game:GetService("ReplicatedStorage").Remote.Orbs.OpenOrbs:FireServer(unpack(args))
+        end
+    end)
+end
 
 local Universal = Window:CreateTab("Universal", 10885655986)
 Universal:CreateSection("Start Admin")

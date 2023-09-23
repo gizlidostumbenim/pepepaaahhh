@@ -139,7 +139,7 @@ Tab:CreateToggle({
 	Callback = function(Value)
         ats = Value
             while ats do task.wait()
-firesignal(game:GetService("Players").PerfectusMim.PlayerGui.MainGui.HUD.BottomButtons.Clicker.Activated)
+firesignal(client.PlayerGui.MainGui.HUD.BottomButtons.Clicker.Activated)
 		end
 	end,
 })
@@ -148,9 +148,9 @@ Tab:CreateToggle({
 	SectionParent = One,
 	CurrentValue = false,
 	Callback = function(Value)
-        ats = Value
-            while ats do task.wait()
-firesignal(game:GetService("Players").PerfectusMim.PlayerGui.MainGui.HUD.BottomButtons.AbilityButton.Activated)
+        abilty = Value
+            while abilty do task.wait()
+firesignal(client.PlayerGui.MainGui.HUD.BottomButtons.AbilityButton.Activated)
 		end
 	end,
 })

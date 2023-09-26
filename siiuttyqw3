@@ -1,0 +1,516 @@
+repeat wait() until game:IsLoaded()
+game:GetService("StarterGui"):SetCore("SendNotification",{
+	Title = "YUTO HUB", -- Required
+	Text = "Loading HUB", -- Required
+	Icon = "rbxassetid://12699767780" -- Optional
+})
+wait(0.1)
+
+local Yutohub = loadstring(game:HttpGet(('https://raw.githubusercontent.com/Binintrozza/GUI-SCRIPT/main/GUI_NEW.lua')))()
+if game.PlaceId == 14433762945 then
+    local MarketplaceService = game:GetService("MarketplaceService")
+local placeName = MarketplaceService:GetProductInfo(game.PlaceId).Name
+    local Window = Yutohub:MakeWindow({Name = "YUTO HUB      "..placeName, HidePremium = false, SaveConfig = true, IntroEnabled = true, IntroText = "YUTO HUB", IntroIcon = "rbxassetid://12699767780",Intro ="rbxassetid://7054195524" , ConfigFolder = "Yuto hub"})
+    local Main = Window:MakeTab({
+        Name = "MAIN ",
+        Icon = "rbxassetid://12699767780",
+        PremiumOnly = false
+    }) 
+    local HS = game:GetService("HttpService")
+local RS = game:GetService("ReplicatedStorage")
+local WS = game:GetService("Workspace")
+local P = game:GetService("Players")
+local VU = game:GetService("VirtualUser")
+local VIM = game:GetService("VirtualInputManager")
+local RunS = game:GetService("RunService")
+local TS = game:GetService("TweenService")
+local httpRequest = (syn and syn.request) or http_request or request or (http and http.request) or nil
+local player = P.LocalPlayer
+local originalCameraZoomDistance = player.CameraMaxZoomDistance
+local character = player.Character
+local BINDABLE = RS.Bindable
+local REMOTE = RS.Remote
+local clickmodule = require(game:GetService("Players").LocalPlayer.PlayerGui.MainGui.MainGuiHandler.HUD.BottomButtons.Clicker)
+local IGNORED_WORLDS = {"Raid","Tower","Champion City"}
+local worldData = require(RS.ModuleScripts.Config.WorldData)
+--hatch 
+local mobs = {}
+_G.disabled = false
+function getTarget(name, world)
+		local enemies = WS.Worlds[world].Enemies
+		for _, enemy in ipairs(enemies:GetChildren()) do
+			if  enemy.Name == name and enemy:FindFirstChild("HumanoidRootPart") then
+				return enemy
+			end
+		end
+	end
+
+    function getMobs()
+        for _, enemy in ipairs(WS.Worlds[player.World.Value].Enemies:GetChildren()) do
+            if not table.find(mobs, enemy.Name) then
+                table.insert(mobs, enemy.Name)
+            end
+        end
+
+        return mobs
+    end
+	function retreat()
+        VIM:SendKeyEvent(true,"R",false,game)
+    end
+	function init()
+		getMobs()
+	end
+	init()
+task.spawn(function()
+	while not _G.disabled do
+		if autofarm1 and selectedMob then
+			local cWorld = player.World.Value
+			local target = getTarget(selectedMob,cWorld)
+			local enemySpawns = WS.Worlds[cWorld].Enemies
+			local enemyModels = WS.Worlds[cWorld].Enemies:GetChildren()
+
+			if target ~= nil and target:FindFirstChild("Attackers") then
+				local enemySpawn
+
+				for _, spawn in ipairs(enemySpawns:GetChildren()) do
+					if spawn == target then
+						enemySpawn = spawn
+
+						break
+					end
+				end
+
+				if enemySpawn ~= nil then
+					if Teleport then
+					character.HumanoidRootPart.CFrame = target.HumanoidRootPart.CFrame
+					end
+					repeat
+						if target ~= nil and target:WaitForChild("Attackers") and table.find(enemyModels, target)  and #target:WaitForChild("Attackers"):GetChildren() == 0 then
+							BINDABLE.Pets.SendAllPets:Fire(target, true)
+						end
+
+						task.wait()
+					until _G.disabled
+					or player.World.Value ~= cWorld
+					or target == nil
+					or target:FindFirstChild("Attackers") == nil
+					or not autofarm1
+
+					retreat()
+				end
+			end
+
+			table.clear(enemyModels)
+			ememyModels = nil
+		elseif autofarm1 and not selectedMob then
+			print ("Select mob first")
+			task.wait(5)
+		end
+
+		task.wait(1)
+	end
+	Teleport = nil
+	autofarm1 = nil
+	selectedMob = nil
+end)
+        --coin/drops
+        task.spawn(function()
+            while not _G.disabled do
+                if autoCollect then
+                    for _, v in ipairs(WS.Effects:GetDescendants()) do
+                        if v.Name == "CurrencyDrop" then
+                            v.CFrame = character.HumanoidRootPart.CFrame
+                        end
+						if v.Name == "ImageDrop" then
+                            v.CFrame = character.HumanoidRootPart.CFrame
+                        end
+                    end
+                end
+
+                task.wait()
+            end
+
+            autoCollect = nil
+        end)
+		task.spawn(function()
+            while not _G.disabled do
+                if autoclick then
+					clickmodule:AttemptClick()
+                end
+
+                task.wait()
+            end
+
+            autoclick = nil
+        end)
+		task.spawn(function()
+            while not _G.disabled do
+                if autosummon then
+					REMOTE.Orbs.OpenOrbs:FireServer(eggchecker,1)
+                end
+
+                task.wait()
+            end
+			eggchecker = nil
+            autosummon = nil
+        end)
+
+
+
+
+
+
+
+Main:AddSection({
+    Name = " Auto Farm"
+})
+Main:AddParagraph("Yuto Hub PAID VERSION BUY", "Yutohub paid version will be good for farm fully , Get more infomation in discord and Buy in discord too")
+
+local Dropdown = Main:AddDropdown({
+    Name = "Select Enemy To Farm",
+    Default = false,
+    Save = true,
+    Flag = "Select Enemy To Farm",
+    Options = mobs,
+    Callback = function(value)
+        selectedMob = value
+    end
+})
+ Main:AddButton({
+    Name = "Refresh Enemy List",
+    Callback = function()
+        selectedMob = nil
+        mobs = {}
+        mobs = getMobs()
+        Dropdown:Refresh(mobs,true)
+        Dropdown:Set(false)
+
+
+    end
+})
+Main:AddToggle({
+    Name = "AUTO FARM MOB SELECT",
+    Default = false,
+    Save = true,
+    Flag = "AUTO FARM tp Mob Select",
+    Callback = function(toggleState)
+        autofarm1=toggleState
+    end
+})
+Main:AddToggle({
+    Name = "Teleport (For not Farm in range)",
+    Default = false,
+    Save = true,
+    Flag = "AUTO FARM tp Mob Select",
+    Callback = function(toggleState)
+        Teleport=toggleState
+    end
+})
+Main:AddSection({
+    Name = "Features"
+})
+Main:AddToggle({
+    Name = "AUTO CLICK",
+    Default = false,
+    Save = true,
+    Flag = "AUTO CLICK",
+    Callback = function(toggleState)
+        autoclick=toggleState
+    end
+})
+Main:AddToggle({
+    Name = "AUTO COLLECT",
+    Default = false,
+    Save = true,
+    Flag = "AUTO Collect",
+    Callback = function(toggleState)
+        autoCollect=toggleState
+    end
+})
+Main:AddSection({		
+    Name = "Spirit"
+})
+Main:AddButton({
+    Name = "Teleport to Spirit",
+    Callback = function()
+		local spirit = game:GetService("Workspace").Effects:FindFirstChild("Spirit")
+		if spirit then
+			character.HumanoidRootPart.CFrame = spirit.WorldPivot
+		end
+
+    end
+})
+local hatch = Window:MakeTab({
+    Name = "OpenOrbs",
+    Icon = "rbxassetid://12699767780",
+    PremiumOnly = false
+ })
+ hatch:AddParagraph("Near Orb To Hatch")
+
+ local eggData = {
+    ["Dragon Orb"] = "DBZOrb",
+	["Pirate Orb"] = "OnePieceOrb",
+	["Hero Orb"] = "NMHAOrb",
+	["Ninja Orb"] = "NarutoOrb",
+	["Strange Orb"] = "BizarreOrb",
+	["Demon Orb"] = "DemonOrb",
+	["Cursed Orb"] = "JJKOrb",
+	["Black Hole Orb"] = "BlackHoleOrb",
+
+ }
+ local Eggpositom = {
+    ["Dragon Orb"] = Vector3.new(1614, 44, -720),
+	["Pirate Orb"] = Vector3.new(1287, 60, 1739),
+	["Black Hole Orb"] = Vector3.new(-2121, 123, -3288),
+
+ }
+ hatch:AddDropdown({
+    Name = "Select Orbs : ",
+    Default = false,
+    Save = true,
+    Flag = "Select Orbs :",
+    Options = {"Dragon Orb",
+"Pirate Orb",
+"Hero Orb",
+"Ninja Orb",
+"Strange Orb",
+"Demon Orb",
+"Cursed Orb",
+"Black Hole Orb"} ,
+    Callback = function(value)
+ eggchecker=eggData[value]
+ tegsnsgiqs = value
+    end
+})
+local Eggdeataworld = {
+ }
+hatch:AddButton({
+    Name = "Tp To Selected Orb",
+    Default = false,
+    Callback = function()
+		REMOTE.Player.Teleport:FireServer(Eggdeataworld[tegsnsgiqs])
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(Eggpositom[tegsnsgiqs]) 
+
+    end
+})
+hatch:AddToggle({
+    Name = "Auto Hatch Selected Orb",
+    Default = false,
+    Save = true,
+    Flag = "Auto Hatch Orb Select",
+    Callback = function(toggleState)
+        autosummon = toggleState
+    end
+})
+local displayNameToWorldName = {}
+local ttp = Window:MakeTab({
+    Name = "Teleport",
+    Icon = "rbxassetid://12699767780",
+    PremiumOnly = false
+ }) 
+ ttp:AddSection({
+    Name = "TELEPORT : "
+
+}) 
+local tab = {}
+for worldName, info in pairs(worldData) do
+    if not table.find(IGNORED_WORLDS, worldName) then
+        displayNameToWorldName[info.DisplayName] = worldName
+        table.insert(tab, info)
+    end
+end
+
+table.sort(tab, function(a, b)
+    return a.PurchasePrice < b.PurchasePrice
+end)
+
+for _, info in ipairs(tab) do
+    ttp:AddButton({
+        Name = info.DisplayName,
+        Default = false,
+        Callback = function()
+            local world = displayNameToWorldName[info.DisplayName]
+            REMOTE.Player.Teleport:FireServer(world)
+        end
+    })
+end
+
+local Player = Window:MakeTab({
+    Name = "LOCAL PLAYER",
+    Icon = "rbxassetid://12699767780",
+    PremiumOnly = false
+})
+Player:AddParagraph("Local Player ","Speed ")
+Player:AddSlider({
+    Name = "Walkspeed",
+    Min = 0,
+    Max = 500,
+    Default = 50,
+    Color = Color3.fromRGB(255,255,255),
+    Increment = 1,
+    ValueName = "Speeds",
+    Callback = function(s)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+
+    end  
+})
+Player:AddSlider({
+    Name = "JumpPower",
+    Min = 0,
+    Max = 500,
+    Default = false,
+    Color = Color3.fromRGB(255,255,255),
+    Increment = 1,
+    ValueName = "Powers",
+    Callback = function(s)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
+    end  
+})
+local misc = Window:MakeTab({
+    Name = "MISC",
+    Icon = "rbxassetid://12699767780",
+    PremiumOnly = false
+ })
+misc:AddSection({
+    Name = "Server Misc"
+})
+misc:AddParagraph("Anti Afk NOTIFICATION"," Script Will Auto anti afk when you excute  !")
+ function antiAFK()
+    player.Idled:Connect(function()
+        VU:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+        task.wait(1)
+        VU:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    end)
+end
+    antiAFK()
+function CopyjobID()
+    local JobId = game.JobId
+
+    setclipboard(JobId)
+end
+local whitescreen = false
+misc:AddToggle({
+    Name = "White Screen ",
+    Default = false,
+    Callback = function (tooglestate)
+        whitescreen = tooglestate
+if whitescreen == true then
+        game:GetService("RunService"):Set3dRenderingEnabled(false)
+        elseif whitescreen == false  then
+            game:GetService("RunService"):Set3dRenderingEnabled(true)
+
+    end
+end
+
+})
+
+misc:AddButton({
+    Name = "Hop Sever ",
+    Default = false,
+    Callback = function()
+        local Player = game.Players.LocalPlayer    
+        local Http = game:GetService("HttpService")
+        local TPS = game:GetService("TeleportService")
+        local Api = "https://games.roblox.com/v1/games/"
+
+        local _place,_id = game.PlaceId, game.JobId
+        local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=10"
+        function ListServers(cursor)
+           local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+           return Http:JSONDecode(Raw)
+        end
+
+        time_to_wait = 3 
+        while wait(time_to_wait) do
+           Player.Character.HumanoidRootPart.Anchored = true
+           local Servers = ListServers()
+           local Server = Servers.data[math.random(1,#Servers.data)]
+           TPS:TeleportToPlaceInstance(_place, Server.id, Player)
+        end
+            Yutohub:MakeNotification({
+                Name = "success Copy",
+                Content = "Copy Your JobID",
+                Image = "rbxassetid://12699767780",
+                Time = 5
+            })
+   end
+})
+misc:AddButton({
+    Name = "Copy JobID Sever",
+    Default = false,
+    Callback = function()
+            CopyjobID()
+            Yutohub:MakeNotification({
+                Name = "success Copy",
+                Content = "Copy Your JobID",
+                Image = "rbxassetid://12699767780",
+                Time = 5
+            })
+   end
+})
+misc:AddTextbox({
+    Name = "Type Your JobID And Enter",
+    Default = false,
+    TextDisappear = true,
+    Callback = function(vew)
+        Players = game:GetService("Players")
+
+        PlaceId, JobId = game.PlaceId, vew  
+TeleportService = game:GetService("TeleportService")
+TeleportService:TeleportToPlaceInstance(PlaceId, JobId, Players.LocalPlayer)
+    end	  
+})
+ misc:AddSection({
+    Name = "Save + Load Config"
+})
+misc:AddButton({
+    Name = "Save ConFig !",
+    Callback = function()
+     Yutohub:SaveCfg("Yuto hub")
+            Yutohub:MakeNotification({
+                Name = "Success Save ConFig Yuto hub",
+                Content = "If you want use this config just load it",
+                Image = "rbxassetid://12699767780",
+                Time = 5
+            })
+      end    
+})
+misc:AddButton({
+    Name = "Load ConFig !",
+    Callback = function()
+        Yutohub:Init()
+      end    
+})
+local Credit = Window:MakeTab({
+	Name = "DISCORD",
+	Icon = "rbxassetid://12699767780",
+	PremiumOnly = false
+	})
+	Credit:AddParagraph("Click To Copy Link Discord COMMUNITY To clipboard ","WHEN YOU COPY WILL HAVE A NOTIFICATION ")
+	Credit:AddButton({
+		Name = " COPY SERVER DISCORD LINK ",
+		Callback = function()
+			local serverLink = "https://discord.gg/Rq7m89mwvD" -- Thay xxxxxxxxxx bằng mã link server Discord của bạn
+			setclipboard(serverLink) 
+			local success = true
+			if success then
+				Yutohub:MakeNotification({
+					Name = "Copy To clipboard",
+					Content = "Let Join DISCORD SEVER ( YUTO HUB | COMMUNITY )",
+					Image = "rbxassetid://12699767780",
+					Time = 5
+				})
+			end
+		end
+	})   
+else
+Yutohub:MakeNotification({
+Name = "DONT SUPPORT THIS GAME",
+Content = "Check STATUS ON DISCORD SEVER ( YUTO HUB | COMMUNITY )",
+Image = "rbxassetid://12699767780",
+Time = 10
+})
+
+
+Yutohub:Init()
+end

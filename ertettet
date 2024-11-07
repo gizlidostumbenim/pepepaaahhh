@@ -1,0 +1,5 @@
+    game:GetService("StarterGui"):SetCore("SendNotification",{
+        Title = "Perfectus Hub",
+        Text = "Not support the game.",
+        Icon = "rbxassetid://17009514249"
+    })

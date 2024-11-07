@@ -1,9 +1,0 @@
-local Games = {
-    [89438510123061] = "https://raw.githubusercontent.com/gizlidostumbenim/phub2/refs/heads/main/asdadsadasdas"
-}
-
-if Games[game.PlaceId] then
-    loadstring(game:HttpGet(Games[game.PlaceId]))()
-else
-    print("Perfectus Hub: Game is Not Supported")
-end
